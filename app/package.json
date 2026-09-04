@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "validar": "tsx tools/validar.ts",
+    "mision:nueva": "tsx tools/nueva.ts",
+    "test": "tsx --test tools/*.test.ts"
   },
   "dependencies": {
     "@codemirror/commands": "^6.11.0",
@@ -27,6 +30,8 @@
     "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react": "^6.1.0",
     "oxlint": "^1.79.0",
+    "pyodide": "^314.0.6",
+    "tsx": "^4.23.13",
     "typescript": "~6.0.2",
     "vite": "^8.2.2"
   }

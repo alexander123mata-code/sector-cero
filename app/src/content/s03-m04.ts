@@ -13,6 +13,7 @@ export const s03m04: Mision = {
     "Suma todas las lecturas validas y deten el bucle en cuanto aparezca ese centinela. Guarda el resultado en `total`.",
   plantilla:
     "total = 0\n\nwhile True:\n    lectura = leer_sensor()\n    # tu codigo aqui\n",
+  solucion: "total = 0\nwhile True:\n    lectura = leer_sensor()\n    if lectura == -1:\n        break\n    total = total + lectura\n",
   salida: "total",
   sensor: { nombre: "leer_sensor", desde: "lecturas", agotado: -1 },
   pruebas: [

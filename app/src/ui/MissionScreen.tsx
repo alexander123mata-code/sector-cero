@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import type { Evaluacion, Mision } from "../types/mission";
-import { CANCELADO, Runner } from "../engine/runner";
+import { CANCELADO, type Runner } from "../engine/runner";
 import { evaluar } from "../engine/evaluate";
 import { usarProgreso } from "../store/progress";
 import { Briefing } from "./Briefing";
@@ -10,79 +10,62 @@ import { Cabecera } from "./Cabecera";
 
 const LISTO = "Interprete listo. Escribe tu solucion y pulsa ENVIAR.";
 
-export function MissionScreen({ mision }: { mision: Mision }) {
-  const runner = useRef<Runner | null>(null);
-  const [estado, setEstado] = useState("Arrancando el interprete...");
-  const [listo, setListo] = useState(false);
+/** Lo ejecutado pertenece a una mision concreta; al cambiar de mision se descarta. */
+type Sesion = { id: string; estado: string; ev: Evaluacion | null };
+
+type Props = { mision: Mision; runner: Runner; listo: boolean; arranque: string };
+
+export function MissionScreen({ mision, runner, listo, arranque }: Props) {
   const [corriendo, setCorriendo] = useState(false);
-  const [ev, setEv] = useState<Evaluacion | null>(null);
+  const [sesion, setSesion] = useState<Sesion | null>(null);
 
   const est = usarProgreso((s) => s.porMision[mision.id]);
   const escribir = usarProgreso((s) => s.escribir);
   const pedirPista = usarProgreso((s) => s.pedirPista);
   const registrar = usarProgreso((s) => s.registrar);
 
-  useEffect(() => {
-    // StrictMode monta el efecto dos veces: el runner descartado no debe poder
-    // escribir en el estado del que sigue vivo.
-    let vivo = true;
-    const r = new Runner();
-    runner.current = r;
-    r.precargar((t) => vivo && setEstado(`${t}...`))
-      .then(() => {
-        if (!vivo) return;
-        setListo(true);
-        setEstado(LISTO);
-      })
-      .catch((e: Error) => {
-        if (!vivo || e.message === CANCELADO) return;
-        setEstado(`No se pudo arrancar el interprete: ${e.message}`);
-      });
-    return () => {
-      vivo = false;
-      r.destruir();
-    };
-  }, []);
-
-  useEffect(() => {
-    setEv(null);
-    if (listo) setEstado(LISTO);
-  }, [mision.id, listo]);
+  // Se deriva en el render en lugar de resetearse con un efecto.
+  const vista: Sesion =
+    sesion?.id === mision.id
+      ? sesion
+      : { id: mision.id, estado: listo ? LISTO : arranque, ev: null };
 
   const enviar = useCallback(async () => {
-    const r = runner.current;
-    if (!r || corriendo) return;
+    if (corriendo) return;
     setCorriendo(true);
-    setEstado("Ejecutando contra las pruebas...");
+    setSesion({ id: mision.id, estado: "Ejecutando contra las pruebas...", ev: null });
     try {
-      const { nodos, casos } = await r.correr({
+      const { nodos, casos } = await runner.correr({
         codigo: est.codigo,
         salida: mision.salida,
         sensor: mision.sensor ? JSON.stringify(mision.sensor) : null,
         casos: mision.pruebas.map((p) => JSON.stringify(p.entrada)),
       });
-      const resultado = evaluar(mision, nodos, casos);
-      setEv(resultado);
-      registrar(mision.id, resultado.estrellas, resultado.superada);
+      const ev = evaluar(mision, nodos, casos);
+      registrar(mision.id, ev.estrellas, ev.superada);
       const impreso = casos.map((c) => c.impreso ?? "").join("").trim();
-      setEstado(
-        resultado.superada
-          ? `Superada con ${resultado.estrellas} de 3 estrellas.${impreso ? `\n\n${impreso}` : ""}`
-          : `Aun no.${impreso ? `\n\n${impreso}` : ""}`,
-      );
+      setSesion({
+        id: mision.id,
+        ev,
+        estado:
+          (ev.superada ? `Superada con ${ev.estrellas} de 3 estrellas.` : "Aun no.") +
+          (impreso ? `\n\n${impreso}` : ""),
+      });
     } catch (e) {
       const m = e instanceof Error ? e.message : String(e);
       if (m === CANCELADO) return;
-      setEstado(
-        m === "TIMEOUT"
-          ? "El interprete dejo de responder. Se reinicio: vuelve a enviar."
-          : `Fallo la ejecucion: ${m}`,
-      );
-      setEv(null);
+      setSesion({
+        id: mision.id,
+        ev: null,
+        estado:
+          m === "TIMEOUT"
+            ? "El interprete dejo de responder. Se reinicio: vuelve a enviar."
+            : `Fallo la ejecucion: ${m}`,
+      });
     } finally {
       setCorriendo(false);
     }
-  }, [corriendo, est.codigo, mision, registrar]);
+  }, [corriendo, est.codigo, mision, registrar, runner]);
 
   const quedanPistas = est.pistasUsadas < mision.pistas.length;
 
@@ -117,7 +100,7 @@ export function MissionScreen({ mision }: { mision: Mision }) {
             </div>
           </div>
         </main>
-        <Resultado mision={mision} ev={ev} estado={estado} />
+        <Resultado mision={mision} ev={vista.ev} estado={vista.estado} />
       </div>
     </div>
   );

@@ -48,6 +48,10 @@ export const MisionSchema = z.object({
   xp: z.number().int().positive(),
   enunciado: z.string(),
   plantilla: z.string(),
+  // Solucion de referencia. El validador la ejecuta contra las pruebas de la
+  // propia mision: es lo que permite detectar pruebas contradictorias,
+  // restricciones imposibles de cumplir y presupuestos de ops irreales.
+  solucion: z.string(),
   salida: z.string(),
   sensor: SensorSchema.optional(),
   pruebas: z.array(PruebaSchema).min(1),
