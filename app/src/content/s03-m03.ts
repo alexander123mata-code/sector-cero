@@ -12,6 +12,7 @@ export const s03m03: Mision = {
     "Encuentra la posicion del primer numero negativo de `lecturas` y guardala en `posicion`. " +
     "En cuanto lo encuentres deja de buscar. Si no hay ninguno, `posicion` vale -1.",
   plantilla: "posicion = -1\n\n# tu codigo aqui\n",
+  solucion: "posicion = -1\nfor i in range(len(lecturas)):\n    if lecturas[i] < 0:\n        posicion = i\n        break\n",
   salida: "posicion",
   pruebas: [
     { entrada: { lecturas: [8, 3, -4, 7, -9] }, salida: 2, oculta: false },
@@ -21,7 +22,7 @@ export const s03m03: Mision = {
   restricciones: {
     exigeNodo: ["Break"],
     prohibeNodo: [],
-    presupuestoOps: 40,
+    presupuestoOps: 12,
   },
   pistas: [
     "`range(len(lecturas))` te da las posiciones 0, 1, 2... en vez de los valores.",

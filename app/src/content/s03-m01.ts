@@ -12,6 +12,7 @@ export const s03m01: Mision = {
     "Suma todos los numeros enteros desde 1 hasta `objetivo`, ambos incluidos. " +
     "Si `objetivo` es 0 el total es 0. Guarda el resultado en `total`.",
   plantilla: "total = 0\nn = 1\n\n# tu codigo aqui\n",
+  solucion: "total = 0\nn = 1\nwhile n <= objetivo:\n    total = total + n\n    n = n + 1\n",
   salida: "total",
   pruebas: [
     { entrada: { objetivo: 5 }, salida: 15, oculta: false },
