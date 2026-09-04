@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { MisionEntorno } from "../types/mission";
 import { leerFicha, faltantes, ETIQUETAS } from "../engine/ficha";
 import { usarProgreso } from "../store/progress";
+import { registrar } from "../telemetria/registro";
 
 const panel: React.CSSProperties = {
   border: "2px solid var(--line)",
@@ -16,12 +17,18 @@ const panel: React.CSSProperties = {
 export function PantallaEntorno({ mision }: { mision: MisionEntorno }) {
   const est = usarProgreso((s) => s.porMision[mision.id]);
   const escribir = usarProgreso((s) => s.escribir);
-  const registrar = usarProgreso((s) => s.registrar);
+  const anotar = usarProgreso((s) => s.registrar);
   const [aviso, setAviso] = useState<string | null>(null);
 
-  const comprobar = () => {
+  useEffect(() => {
+    registrar({ tipo: "abre", mision: mision.id, t: Date.now() });
+  }, [mision.id]);
+
+  const comprobar = useCallback(() => {
+    const t = Date.now();
     const datos = leerFicha(est.codigo);
     if (!datos) {
+      registrar({ tipo: "ficha", mision: mision.id, t, resultado: "ilegible", faltan: [] });
       setAviso(
         "Esa ficha no se entiende. Copiala entera, desde el principio hasta el final, sin espacios de mas.",
       );
@@ -29,15 +36,17 @@ export function PantallaEntorno({ mision }: { mision: MisionEntorno }) {
     }
     const faltan = faltantes(mision.exige, datos.ok);
     if (faltan.length) {
+      registrar({ tipo: "ficha", mision: mision.id, t, resultado: "incompleta", faltan });
       setAviso(
         `Tu ficha es correcta, pero todavia falta: ${faltan.map((f) => ETIQUETAS[f] ?? f).join(", ")}. Arreglalo y vuelve a ejecutar 'sector verify'.`,
       );
-      registrar(mision.id, 0, false);
+      anotar(mision.id, 0, false);
       return;
     }
+    registrar({ tipo: "ficha", mision: mision.id, t, resultado: "ok", faltan: [] });
     setAviso(null);
-    registrar(mision.id, 3, true);
-  };
+    anotar(mision.id, 3, true);
+  }, [anotar, est.codigo, mision.exige, mision.id]);
 
   return (
     <div style={{ flexGrow: 1, display: "flex", minHeight: 0 }}>
