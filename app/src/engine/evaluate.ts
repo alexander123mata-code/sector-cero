@@ -41,9 +41,22 @@ function mensajeDe(mision: MisionCodigo, fallo: ResultadoPrueba | undefined): st
   return null;
 }
 
+/**
+ * Las variables de entrada ya existen cuando el codigo del jugador arranca.
+ * Si las declara, su valor pisa el de la prueba y fallan todas a la vez, sin
+ * ninguna pista de por que. Un jugador real escribio `objetivo = 15` creyendo
+ * que tenia que crearla.
+ */
+function pisaLaEntrada(mision: MisionCodigo, asignados: string[]): string[] {
+  const entradas = new Set(mision.pruebas.flatMap((p) => Object.keys(p.entrada)));
+  if (mision.sensor) entradas.add(mision.sensor.nombre);
+  return asignados.filter((a) => entradas.has(a));
+}
+
 export function evaluar(
   mision: MisionCodigo,
   nodos: string[],
+  asignados: string[],
   casos: SalidaCaso[],
 ): Evaluacion {
   const set = new Set(nodos);
@@ -100,12 +113,20 @@ export function evaluar(
   const estrellas = ((n1 ? 1 : 0) + (n2 ? 1 : 0) + (n3 ? 1 : 0)) as 0 | 1 | 2 | 3;
   const primerFallo = pruebas.find((p) => !p.paso);
 
+  // Pisar la entrada explica cualquier otro sintoma, asi que va antes que los
+  // fallos previstos: sin esto el jugador persigue el error equivocado.
+  const pisadas = pisaLaEntrada(mision, asignados);
+  const mensaje =
+    !n1 && pisadas.length
+      ? `${pisadas.map((v) => `\`${v}\``).join(" y ")} ${pisadas.length > 1 ? "ya existen" : "ya existe"} cuando tu codigo empieza: ${pisadas.length > 1 ? "los pone" : "lo pone"} cada prueba con su propio valor. Al ${pisadas.length > 1 ? "declararlos" : "declararlo"} tu, tu valor pisa el de la prueba y fallan todas. Borra esa linea y usa ${pisadas.length > 1 ? "esas variables" : "esa variable"} tal cual.`
+      : mensajeDe(mision, primerFallo);
+
   return {
     pruebas,
     niveles,
     estrellas,
     ops,
-    mensaje: mensajeDe(mision, primerFallo),
+    mensaje,
     superada: n1,
   };
 }

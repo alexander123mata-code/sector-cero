@@ -12,8 +12,7 @@ export const s03m04: Mision = {
   enunciado:
     "El sensor devuelve una lectura cada vez que lo llamas. Cuando se queda sin datos devuelve -1. " +
     "Suma todas las lecturas validas y deten el bucle en cuanto aparezca ese centinela. Guarda el resultado en `total`.",
-  plantilla:
-    "total = 0\n\nwhile True:\n    lectura = leer_sensor()\n    # tu codigo aqui\n",
+  plantilla: "# leer_sensor() ya existe: cada prueba decide que va devolviendo.\n\ntotal = 0\n\nwhile True:\n    lectura = leer_sensor()\n    # tu codigo aqui\n",
   solucion: "total = 0\nwhile True:\n    lectura = leer_sensor()\n    if lectura == -1:\n        break\n    total = total + lectura\n",
   ejemplo: {
     situacion: "Una cinta transportadora entrega cajas hasta que entrega una vacia.",

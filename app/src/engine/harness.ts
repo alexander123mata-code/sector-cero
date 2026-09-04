@@ -23,7 +23,13 @@ def sc_nodos(codigo):
     except SyntaxError as e:
         return json.dumps({"ok": False, "error": "SyntaxError: " + str(e.msg) + " (linea " + str(e.lineno) + ")"})
     nombres = sorted({type(n).__name__ for n in ast.walk(arbol)})
-    return json.dumps({"ok": True, "nodos": nombres})
+    asignados = sorted({
+        d.id
+        for n in ast.walk(arbol)
+        for d in ast.walk(n)
+        if isinstance(d, ast.Name) and isinstance(d.ctx, ast.Store)
+    })
+    return json.dumps({"ok": True, "nodos": nombres, "asignados": asignados})
 
 def sc_correr(codigo, entrada_json, salida_var, sensor_json):
     """Ejecuta el codigo contra un caso y devuelve valor, ops y traza."""

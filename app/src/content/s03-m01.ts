@@ -12,12 +12,12 @@ export const s03m01: Mision = {
   enunciado:
     "Suma todos los numeros enteros desde 1 hasta `objetivo`, ambos incluidos. " +
     "Si `objetivo` es 0 el total es 0. Guarda el resultado en `total`.",
-  plantilla: "total = 0\nn = 1\n\n# tu codigo aqui\n",
+  plantilla: "# objetivo ya existe: cada prueba le pone su valor. No la declares tu.\n\ntotal = 0\nn = 1\n\n# tu codigo aqui\n",
   solucion: "total = 0\nn = 1\nwhile n <= objetivo:\n    total = total + n\n    n = n + 1\n",
   ejemplo: {
-    situacion: "Multiplicar sin usar el simbolo de multiplicar: sumar 10 tres veces.",
+    situacion: "Cuanto pesan 3 cajas de 10 kilos, sumandolas de una en una.",
     codigo: "total = 0\nveces = 0\n\nwhile veces < 3:\n    total = total + 10\n    veces = veces + 1\n\n# al terminar, total vale 30",
-    comentario: "Hay tres piezas. `total` guarda lo que llevas acumulado y empieza en 0. `veces` cuenta las vueltas y sube de una en una. La condicion `veces < 3` decide si hay otra vuelta: cuando deja de ser cierta, el bucle termina. Las lineas de dentro del bucle van sangradas cuatro espacios; asi sabe Python que pertenecen al while. Si olvidas la linea que hace crecer `veces`, la condicion nunca cambia y el bucle no acaba nunca.",
+    comentario: "Hay tres piezas. `total` guarda lo que llevas acumulado y empieza en 0. `veces` cuenta las vueltas y sube de una en una. La condicion `veces < 3` decide si hay otra vuelta: cuando deja de ser cierta, el bucle termina. Las lineas de dentro van sangradas cuatro espacios; asi sabe Python que pertenecen al while. Ojo a una diferencia con tu mision: aqui siempre se suma lo mismo (10), mientras que a ti te toca sumar un numero que cambia en cada vuelta.",
   },
   salida: "total",
   pruebas: [
@@ -36,6 +36,14 @@ export const s03m01: Mision = {
     "while n <= objetivo:\n    total = total + n\n    n = n + 1",
   ],
   fallosPrevistos: [
+    {
+      cuando: { tipo: "salida", valor: 120 },
+      dice: "Estas multiplicando los numeros en vez de sumarlos: 1x2x3x4x5 da 120, pero 1+2+3+4+5 da 15. Revisa el signo de la linea que acumula.",
+    },
+    {
+      cuando: { tipo: "salida", valor: 5 },
+      dice: "Sumas 1 en cada vuelta, asi que estas contando cuantas vueltas das: con objetivo 5 das 5 vueltas y sale 5. Lo que hay que sumar es el numero de esa vuelta, que va cambiando.",
+    },
     {
       cuando: { tipo: "salida", valor: 21 },
       dice: "Te pasas por uno: estas sumando tambien el numero siguiente a `objetivo`. Revisa si la condicion usa <= o <.",
