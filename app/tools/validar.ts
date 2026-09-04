@@ -1,6 +1,6 @@
 import { loadPyodide } from "pyodide";
 import { ARNES_PY } from "../src/engine/harness";
-import type { Mision } from "../src/types/mission";
+import { esCodigo, type Mision } from "../src/types/mission";
 import { comprobarEstatico, type Hallazgo } from "./reglas";
 
 const j = (v: unknown) => JSON.stringify(v);
@@ -30,6 +30,7 @@ async function comprobarEjecutando(misiones: Mision[]): Promise<Hallazgo[]> {
   ) => string;
 
   for (const m of misiones) {
+    if (!esCodigo(m)) continue;
     const analisis = JSON.parse(scNodos(m.solucion)) as
       | { ok: true; nodos: string[] }
       | { ok: false; error: string };

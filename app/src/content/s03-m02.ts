@@ -1,6 +1,7 @@
 import type { Mision } from "../types/mission";
 
 export const s03m02: Mision = {
+  tipo: "codigo",
   id: "s03-m02-pares",
   sector: 3,
   titulo: "Solo los pares",

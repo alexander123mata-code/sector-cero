@@ -6,6 +6,7 @@ import { comprobarEstatico } from "./reglas";
 /** Mision minima valida; cada prueba rompe solo lo que quiere comprobar. */
 function base(parches: Partial<Mision> = {}): Mision {
   return MisionSchema.parse({
+    tipo: "codigo",
     id: "s99-m01-prueba",
     sector: 99,
     titulo: "Prueba",
@@ -90,4 +91,45 @@ test("avisa si el sensor no recibe datos en alguna prueba", () => {
 test("avisa si no hay ninguna prueba oculta", () => {
   const m = base({ pruebas: [{ entrada: { a: 1 }, salida: 1, oculta: false }] });
   assert.ok(reglas([m]).includes("sin-prueba-oculta"));
+});
+
+test("rechaza un caracter de control colado en un texto", () => {
+  const m = base({ enunciado: `Activalo con .venv\u0007ctivate` });
+  assert.ok(reglas([m]).includes("caracter-de-control"));
+});
+
+test("una mision de entorno sana no genera hallazgos", () => {
+  const m = MisionSchema.parse({
+    tipo: "entorno",
+    id: "s99-e01",
+    sector: 99,
+    titulo: "Entorno",
+    concepto: ["instalacion"],
+    requiere: [],
+    minutos: 10,
+    xp: 100,
+    enunciado: "Instala algo.",
+    exige: ["python_version"],
+    pasos: [{ texto: "Instala Python.", orden: "python --version" }],
+    pistas: ["una pista"],
+  });
+  assert.deepEqual(comprobarEstatico([m]), []);
+});
+
+test("rechaza una comprobacion que el CLI no conoce", () => {
+  const m = MisionSchema.parse({
+    tipo: "entorno",
+    id: "s99-e02",
+    sector: 99,
+    titulo: "Entorno",
+    concepto: ["instalacion"],
+    requiere: [],
+    minutos: 10,
+    xp: 100,
+    enunciado: "Instala algo.",
+    exige: ["rust_instalado"],
+    pasos: [{ texto: "Instala Rust." }],
+    pistas: ["una pista"],
+  });
+  assert.ok(reglas([m]).includes("comprobacion-desconocida"));
 });

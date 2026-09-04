@@ -1,1 +1,7 @@
 diseno/pantallas-sector-cero.html
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/

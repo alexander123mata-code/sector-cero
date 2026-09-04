@@ -1,7 +1,7 @@
-import type { Mision } from "../types/mission";
+import type { MisionCodigo } from "../types/mission";
 
 type Props = {
-  mision: Mision;
+  mision: MisionCodigo;
   pistasUsadas: number;
 };
 

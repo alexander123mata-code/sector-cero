@@ -1,6 +1,7 @@
 import type { Mision } from "../types/mission";
 
 export const s03m01: Mision = {
+  tipo: "codigo",
   id: "s03-m01-contador",
   sector: 3,
   titulo: "El contador que no cuenta",
