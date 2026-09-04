@@ -33,7 +33,9 @@ export const vacio = (codigo: string): EstadoMision => ({
 });
 
 function inicial(): Record<string, EstadoMision> {
-  return Object.fromEntries(misiones.map((m) => [m.id, vacio(m.plantilla)]));
+  return Object.fromEntries(
+    misiones.map((m) => [m.id, vacio(m.tipo === "codigo" ? m.plantilla : "")]),
+  );
 }
 
 export const usarProgreso = create<Estado>()(
@@ -90,7 +92,22 @@ export const usarProgreso = create<Estado>()(
 
       reiniciarTodo: () => set({ actual: misiones[0].id, porMision: inicial() }),
     }),
-    { name: "sector-cero-progreso-v1" },
+    {
+      name: "sector-cero-progreso-v1",
+      /**
+       * Anadir misiones es lo normal en este proyecto, asi que el progreso
+       * guardado siempre va por detras del contenido. Se rellenan las que
+       * falten sin tocar lo que el jugador ya consiguio.
+       */
+      merge: (persistido, actual) => {
+        const p = persistido as Partial<Estado> | undefined;
+        return {
+          ...actual,
+          ...p,
+          porMision: { ...inicial(), ...(p?.porMision ?? {}) },
+        };
+      },
+    },
   ),
 );
 

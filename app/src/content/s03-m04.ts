@@ -1,6 +1,7 @@
 import type { Mision } from "../types/mission";
 
 export const s03m04: Mision = {
+  tipo: "codigo",
   id: "s03-m04-centinela",
   sector: 3,
   titulo: "El bucle que no sabe cuando parar",

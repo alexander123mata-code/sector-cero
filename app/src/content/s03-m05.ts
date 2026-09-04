@@ -1,6 +1,7 @@
 import type { Mision } from "../types/mission";
 
 export const s03m05: Mision = {
+  tipo: "codigo",
   id: "s03-m05-rejilla",
   sector: 3,
   titulo: "La rejilla",

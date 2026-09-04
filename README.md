@@ -20,7 +20,7 @@ npm run dev
 | --- | --- | --- |
 | 0 | Rebanada vertical: motor completo y 5 misiones del Sector 03 | hecha |
 | 1 | Herramienta de autoria: validador, CI y andamiaje | hecha |
-| 2 | Sectores 00 al 03 completos | pendiente |
+| 2 | Sectores 00 al 03 completos | en curso: Sector 00 hecho |
 | 3 | Identidad visual y cuentas | pendiente |
 | 4 | Sectores 04 al 10 | pendiente |
 
@@ -41,8 +41,31 @@ app/tools/
   validar.ts           valida el contenido ejecutandolo
   reglas.ts            comprobaciones que no necesitan Python
   nueva.ts             andamiaje de una mision nueva
+cli/                   el paquete `sector-cero` que se instala con pip
+  src/sector_cero/
+    comprobaciones.py  que mira en la maquina del jugador
+    ficha.py           emite la ficha (espejo de app/src/engine/ficha.ts)
+    cli.py             el comando `sector verify`
 diseno/                maquetas .dc.html del lienzo de diseno
 ```
+
+## Los dos tipos de mision
+
+Una mision de **codigo** se resuelve escribiendo Python en el editor. Una de
+**entorno** se resuelve fuera del navegador: el jugador monta algo en su
+maquina, ejecuta `sector verify` y pega la ficha que imprime.
+
+El Sector 00 son misiones de entorno, y por eso la instalacion deja de ser un
+obstaculo previo al juego para pasar a ser la primera victoria.
+
+```bash
+pip install sector-cero
+sector verify
+```
+
+La ficha no es un mecanismo antifraude: el juego no tiene servidor, asi que se
+puede fabricar a mano. La suma de control solo comprueba que el pegado llego
+entero.
 
 Las misiones son **datos declarativos**, nunca componentes. El motor renderiza
 y evalua cualquier mision sin saber cual es. Esto no es un detalle de estilo:
