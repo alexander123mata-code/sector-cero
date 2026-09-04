@@ -118,6 +118,7 @@ export const esEntorno = (m: Mision): m is MisionEntorno => m.tipo === "entorno"
 export type ResultadoPrueba = {
   indice: number;
   oculta: boolean;
+  entrada: Record<string, unknown>;
   paso: boolean;
   esperado: unknown;
   obtenido: unknown;

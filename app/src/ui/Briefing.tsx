@@ -1,4 +1,5 @@
 import type { MisionCodigo } from "../types/mission";
+import { describeEntrada } from "./formato";
 
 type Props = {
   mision: MisionCodigo;
@@ -78,13 +79,19 @@ export function Briefing({ mision, pistasUsadas }: Props) {
 
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         <span className="etiqueta">PRUEBAS VISIBLES</span>
+        <p style={{ margin: 0, fontSize: 13, lineHeight: 1.55, color: "var(--dim)" }}>
+          No son ejercicios distintos: es tu mismo codigo ejecutado con otra entrada.
+          Tiene que pasarlas todas tal cual, sin cambiarlo entre una y otra.
+        </p>
         {visibles.map((p, i) => (
-          <div key={i} className="mono" style={{ ...caja, fontSize: 12.5, display: "flex", gap: 12 }}>
-            <span style={{ flexGrow: 1, overflowX: "auto" }}>
-              {Object.values(p.entrada).map((v) => JSON.stringify(v)).join(", ")}
+          <div key={i} className="mono" style={{ ...caja, fontSize: 12.5, display: "flex", gap: 10, alignItems: "baseline" }}>
+            <span style={{ flexGrow: 1, overflowX: "auto", color: "var(--ink-alto)" }}>
+              {describeEntrada(p.entrada)}
             </span>
             <span style={{ color: "var(--tenue)" }}>→</span>
-            <span style={{ color: "var(--fosforo)" }}>{JSON.stringify(p.salida)}</span>
+            <span style={{ color: "var(--fosforo)", whiteSpace: "nowrap" }}>
+              {mision.salida} = {JSON.stringify(p.salida)}
+            </span>
           </div>
         ))}
         {ocultas > 0 && (

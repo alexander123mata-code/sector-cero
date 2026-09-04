@@ -1,5 +1,6 @@
 import type { Evaluacion, MisionCodigo } from "../types/mission";
 import { Estrellas } from "./Estrellas";
+import { describeEntrada } from "./formato";
 
 type Props = { mision: MisionCodigo; ev: Evaluacion | null; estado: string };
 
@@ -81,7 +82,7 @@ export function Resultado({ mision, ev, estado }: Props) {
                   {p.oculta ? "oculta" : `prueba ${p.indice + 1}`}
                   {p.error
                     ? ` · ${p.error}`
-                    : ` · esperaba ${JSON.stringify(p.esperado)} · obtuvo ${JSON.stringify(p.obtenido)}`}
+                    : ` · con ${describeEntrada(p.entrada)} · esperaba ${JSON.stringify(p.esperado)} · obtuvo ${JSON.stringify(p.obtenido)}`}
                 </span>
               </div>
             ))}

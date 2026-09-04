@@ -54,6 +54,7 @@ export function evaluar(
     return {
       indice: i,
       oculta: p.oculta,
+      entrada: p.entrada,
       paso: c.ok && coincide(c.valor_json, p.salida),
       esperado: p.salida,
       obtenido,
