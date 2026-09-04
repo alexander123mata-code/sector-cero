@@ -10,6 +10,7 @@ export type ResumenMision = {
   intentosHastaAcertar: number | null;
   minutosHastaAcertar: number | null;
   pistas: number;
+  reposiciones: number;
   abandonos: number;
   erroresFrecuentes: { obtenido: string; veces: number }[];
   fichasIlegibles: number;
@@ -47,11 +48,13 @@ export function analizar(registros: Registro[]): ResumenMision[] {
       const fichas: Extract<Suceso, { tipo: "ficha" }>[] = [];
       let aperturas = 0;
       let pistas = 0;
+      let reposiciones = 0;
 
       for (const ss of conActividad) {
         for (const s of ss) {
           if (s.tipo === "abre") aperturas++;
           else if (s.tipo === "pista") pistas++;
+          else if (s.tipo === "repone") reposiciones++;
           else if (s.tipo === "envia") envios.push(s);
           else fichas.push(s);
         }
@@ -95,6 +98,7 @@ export function analizar(registros: Registro[]): ResumenMision[] {
           ? Math.round(media(minutosHasta)! * 10) / 10
           : null,
         pistas,
+        reposiciones,
         abandonos,
         erroresFrecuentes: masFrecuentes(
           envios

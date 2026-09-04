@@ -120,3 +120,15 @@ test("dos aperturas seguidas de la misma mision son una sola", () => {
   assert.equal(esRepeticion(undefined, a), false);
   assert.equal(esRepeticion(a, envio("m1", 1, true, null)), false);
 });
+
+test("cuenta cuantas veces se empieza de nuevo", () => {
+  const r = reg("a", [
+    { tipo: "abre", mision: "m1", t: T0 },
+    { tipo: "repone", mision: "m1", t: T0 + 1000, intento: 1 },
+    { tipo: "repone", mision: "m1", t: T0 + 2000, intento: 2 },
+    envio("m1", 5, true, null),
+  ]);
+  const [m] = analizar([r]);
+  assert.equal(m.reposiciones, 2);
+  assert.equal(m.superada, 1);
+});

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { Evaluacion, MisionCodigo } from "../types/mission";
 import { CANCELADO, type Runner } from "../engine/runner";
 import { evaluar } from "../engine/evaluate";
@@ -6,7 +6,7 @@ import { usarProgreso } from "../store/progress";
 import { registrar } from "../telemetria/registro";
 import { Briefing } from "./Briefing";
 import { Resultado } from "./Resultado";
-import { Editor } from "./Editor";
+import { Editor, type EditorHandle } from "./Editor";
 
 const LISTO = "Interprete listo. Escribe tu solucion y pulsa ENVIAR.";
 
@@ -16,6 +16,7 @@ type Sesion = { id: string; estado: string; ev: Evaluacion | null };
 type Props = { mision: MisionCodigo; runner: Runner; listo: boolean; arranque: string };
 
 export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
+  const editor = useRef<EditorHandle>(null);
   const [corriendo, setCorriendo] = useState(false);
   const [sesion, setSesion] = useState<Sesion | null>(null);
 
@@ -92,14 +93,21 @@ export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
     }
   }, [corriendo, est.codigo, est.intentos, mision, anotar, runner]);
 
+  const reponer = useCallback(() => {
+    registrar({ tipo: "repone", mision: mision.id, t: Date.now(), intento: est.intentos });
+    editor.current?.reponer(mision.plantilla);
+    escribir(mision.id, mision.plantilla);
+  }, [escribir, est.intentos, mision.id, mision.plantilla]);
+
   const quedanPistas = est.pistasUsadas < mision.pistas.length;
+  const tocado = est.codigo !== mision.plantilla;
 
   return (
     <div style={{ flexGrow: 1, display: "flex", minHeight: 0 }}>
         <Briefing mision={mision} pistasUsadas={est.pistasUsadas} />
         <main style={{ flexGrow: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
           <div style={{ flexGrow: 1, minHeight: 0 }}>
-            <Editor clave={mision.id} valor={est.codigo} onCambio={(v) => escribir(mision.id, v)} />
+            <Editor ref={editor} clave={mision.id} valor={est.codigo} onCambio={(v) => escribir(mision.id, v)} />
           </div>
           <div
             style={{
@@ -108,9 +116,22 @@ export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
               justifyContent: "space-between", padding: "0 20px",
             }}
           >
-            <button className="principal" onClick={enviar} disabled={!listo || corriendo}>
-              {corriendo ? "EJECUTANDO" : "ENVIAR"}
-            </button>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <button className="principal" onClick={enviar} disabled={!listo || corriendo}>
+                {corriendo ? "EJECUTANDO" : "ENVIAR"}
+              </button>
+              <button
+                onClick={reponer}
+                disabled={!tocado || corriendo}
+                title="Devuelve el editor a como estaba al empezar. Si te arrepientes, Ctrl+Z lo deshace."
+                style={{ minHeight: 44, padding: "0 14px", fontSize: 10, gap: 8 }}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M4 12a8 8 0 1 1 2.5 5.8" /><path d="M4 18v-5h5" />
+                </svg>
+                EMPEZAR DE NUEVO
+              </button>
+            </div>
             <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
               <span className="mono" style={{ fontSize: 11.5, color: "var(--dim)" }}>
                 intento {est.intentos}

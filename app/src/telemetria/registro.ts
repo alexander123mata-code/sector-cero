@@ -38,6 +38,7 @@ export type Suceso =
       fallos: Fallo[];
     }
   | { tipo: "pista"; mision: string; t: number; numero: number }
+  | { tipo: "repone"; mision: string; t: number; intento: number }
   | {
       tipo: "ficha";
       mision: string;

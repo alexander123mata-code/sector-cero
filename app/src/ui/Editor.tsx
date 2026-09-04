@@ -1,9 +1,14 @@
-import { useEffect, useRef } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { EditorState } from "@codemirror/state";
 import { EditorView, keymap, lineNumbers, highlightActiveLine } from "@codemirror/view";
 import { defaultKeymap, history, historyKeymap, indentWithTab } from "@codemirror/commands";
 import { python } from "@codemirror/lang-python";
 import { oneDark } from "@codemirror/theme-one-dark";
+
+export type EditorHandle = {
+  /** Sustituye el contenido. Va por transaccion, asi que Ctrl+Z lo deshace. */
+  reponer: (texto: string) => void;
+};
 
 type Props = {
   valor: string;
@@ -12,11 +17,26 @@ type Props = {
   clave: string;
 };
 
-export function Editor({ valor, onCambio, clave }: Props) {
+export const Editor = forwardRef<EditorHandle, Props>(function Editor(
+  { valor, onCambio, clave },
+  ref,
+) {
   const host = useRef<HTMLDivElement>(null);
   const vista = useRef<EditorView | null>(null);
   const alCambio = useRef(onCambio);
   alCambio.current = onCambio;
+
+  useImperativeHandle(ref, () => ({
+    reponer(texto: string) {
+      const v = vista.current;
+      if (!v) return;
+      v.dispatch({
+        changes: { from: 0, to: v.state.doc.length, insert: texto },
+        selection: { anchor: texto.length },
+      });
+      v.focus();
+    },
+  }), []);
 
   useEffect(() => {
     if (!host.current) return;
@@ -49,4 +69,4 @@ export function Editor({ valor, onCambio, clave }: Props) {
   }, [clave]);
 
   return <div ref={host} style={{ height: "100%", overflow: "hidden" }} />;
-}
+});
