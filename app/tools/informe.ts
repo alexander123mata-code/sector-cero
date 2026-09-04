@@ -70,6 +70,12 @@ for (const f of filas) {
   if (f.minutosHastaAcertar !== null && f.minutosHastaAcertar > 15) {
     notas.push(`se tarda ${f.minutosHastaAcertar} min de media (el objetivo son 15)`);
   }
+  // Borrarlo todo y empezar de cero es una senal de haberse enredado.
+  if (f.reposiciones >= f.jugadores && f.jugadores > 0) {
+    notas.push(
+      `${f.reposiciones} vez(ces) que alguien borro todo y empezo de nuevo: el enunciado o el ejemplo no estan guiando`,
+    );
+  }
   if (f.fichasIlegibles > 0) {
     notas.push(`${f.fichasIlegibles} ficha(s) pegadas mal: revisa las instrucciones de copiado`);
   }
