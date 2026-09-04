@@ -40,6 +40,40 @@ export function Briefing({ mision, pistasUsadas }: Props) {
         ))}
       </div>
 
+      {mision.ejemplo && (
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <span className="etiqueta" style={{ color: "var(--fosforo)" }}>ASI SE ESCRIBE</span>
+          <div
+            style={{
+              border: "2px solid var(--fosforo-borde)",
+              borderLeft: "5px solid var(--fosforo)",
+              background: "var(--fosforo-fondo)",
+              padding: "14px 15px",
+              display: "flex",
+              flexDirection: "column",
+              gap: 11,
+            }}
+          >
+            <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.6, color: "var(--ink-alto)" }}>
+              {mision.ejemplo.situacion}
+            </p>
+            <pre
+              className="mono"
+              style={{
+                margin: 0, background: "#08090f", border: "1px solid var(--line)",
+                padding: "12px 13px", fontSize: 12, lineHeight: "21px",
+                color: "var(--ink)", overflowX: "auto",
+              }}
+            >
+              {mision.ejemplo.codigo}
+            </pre>
+            <p style={{ margin: 0, fontSize: 13, lineHeight: 1.6, color: "var(--ink)" }}>
+              {mision.ejemplo.comentario}
+            </p>
+          </div>
+        </div>
+      )}
+
       <div style={{ height: 2, background: "var(--line-soft)" }} />
 
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>

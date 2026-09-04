@@ -15,6 +15,11 @@ export const s03m04: Mision = {
   plantilla:
     "total = 0\n\nwhile True:\n    lectura = leer_sensor()\n    # tu codigo aqui\n",
   solucion: "total = 0\nwhile True:\n    lectura = leer_sensor()\n    if lectura == -1:\n        break\n    total = total + lectura\n",
+  ejemplo: {
+    situacion: "Una cinta transportadora entrega cajas hasta que entrega una vacia.",
+    codigo: "cajas = 0\n\nwhile True:\n    peso = siguiente_caja()\n    if peso == 0:\n        break\n    cajas = cajas + 1\n\n# se paro al llegar la caja vacia",
+    comentario: "Un centinela es un valor acordado que significa 'se acabo'. Aqui es el 0. `while True` repite sin condicion propia, asi que la unica forma de salir es el `break`. Fijate en el orden: primero se comprueba si es el centinela y se sale, y solo despues se cuenta. Si lo haces al reves, cuentas tambien la caja vacia.",
+  },
   salida: "total",
   sensor: { nombre: "leer_sensor", desde: "lecturas", agotado: -1 },
   pruebas: [

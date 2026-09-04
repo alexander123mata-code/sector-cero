@@ -14,6 +14,11 @@ export const s03m05: Mision = {
     "Un 1 es un obstaculo y un 0 es suelo libre. Cuenta cuantos obstaculos hay en total y guardalo en `obstaculos`.",
   plantilla: "obstaculos = 0\n\n# tu codigo aqui\n",
   solucion: "obstaculos = 0\nfor fila in rejilla:\n    for celda in fila:\n        if celda == 1:\n            obstaculos = obstaculos + 1\n",
+  ejemplo: {
+    situacion: "Contar cuantas fichas hay en un tablero de dos filas.",
+    codigo: "fichas = 0\n\nfor fila in [[1, 0], [0, 1]]:\n    for casilla in fila:\n        if casilla == 1:\n            fichas = fichas + 1\n\n# al terminar, fichas vale 2",
+    comentario: "El bucle de fuera te da una fila entera en cada vuelta; el de dentro recorre las casillas de esa fila. El de dentro se ejecuta completo por cada vuelta del de fuera, asi que con 2 filas de 2 casillas se miran 4 casillas en total. Cada nivel anadido lleva cuatro espacios mas de sangria.",
+  },
   salida: "obstaculos",
   pruebas: [
     {

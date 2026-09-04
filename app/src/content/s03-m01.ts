@@ -14,6 +14,11 @@ export const s03m01: Mision = {
     "Si `objetivo` es 0 el total es 0. Guarda el resultado en `total`.",
   plantilla: "total = 0\nn = 1\n\n# tu codigo aqui\n",
   solucion: "total = 0\nn = 1\nwhile n <= objetivo:\n    total = total + n\n    n = n + 1\n",
+  ejemplo: {
+    situacion: "Multiplicar sin usar el simbolo de multiplicar: sumar 10 tres veces.",
+    codigo: "total = 0\nveces = 0\n\nwhile veces < 3:\n    total = total + 10\n    veces = veces + 1\n\n# al terminar, total vale 30",
+    comentario: "Hay tres piezas. `total` guarda lo que llevas acumulado y empieza en 0. `veces` cuenta las vueltas y sube de una en una. La condicion `veces < 3` decide si hay otra vuelta: cuando deja de ser cierta, el bucle termina. Las lineas de dentro del bucle van sangradas cuatro espacios; asi sabe Python que pertenecen al while. Si olvidas la linea que hace crecer `veces`, la condicion nunca cambia y el bucle no acaba nunca.",
+  },
   salida: "total",
   pruebas: [
     { entrada: { objetivo: 5 }, salida: 15, oculta: false },
