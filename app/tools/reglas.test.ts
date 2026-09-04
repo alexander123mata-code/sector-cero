@@ -17,6 +17,7 @@ function base(parches: Partial<Mision> = {}): Mision {
     enunciado: "Guarda algo en total.",
     plantilla: "total = 0\n",
     solucion: "total = 1\n",
+    ejemplo: { situacion: "Un caso parecido.", codigo: "x = 1", comentario: "Asi se escribe." },
     salida: "total",
     pruebas: [
       { entrada: { a: 1 }, salida: 1, oculta: false },
@@ -150,4 +151,41 @@ test("no avisa entre misiones del mismo sector", () => {
   const a = base({ id: "a", sector: 3, requiere: [] });
   const b = base({ id: "b", sector: 3, requiere: ["a"] });
   assert.ok(!reglas([a, b]).includes("salto-de-sector"));
+});
+
+test("exige ejemplo a la mision que estrena un concepto", () => {
+  const m = base({ concepto: ["while"], ejemplo: undefined });
+  assert.ok(reglas([m]).includes("concepto-sin-ejemplo"));
+});
+
+test("acepta la mision que estrena concepto si trae ejemplo", () => {
+  const m = base({
+    concepto: ["while"],
+    ejemplo: {
+      situacion: "Sumar 10 tres veces.",
+      codigo: "total = 0\nveces = 0\nwhile veces < 3:\n    total = total + 10\n    veces = veces + 1\n",
+      comentario: "El bucle repite mientras la condicion sea cierta.",
+    },
+  });
+  assert.ok(!reglas([m]).includes("concepto-sin-ejemplo"));
+});
+
+test("no exige ejemplo cuando el concepto ya se vio antes", () => {
+  const a = base({
+    id: "a",
+    concepto: ["while"],
+    ejemplo: { situacion: "s", codigo: "x = 1\n", comentario: "c" },
+  });
+  const b = base({ id: "b", concepto: ["while"] });
+  assert.ok(!reglas([a, b]).includes("concepto-sin-ejemplo"));
+});
+
+test("una mision de entorno no necesita ejemplo de codigo", () => {
+  const m = MisionSchema.parse({
+    tipo: "entorno", id: "s99-e03", sector: 99, titulo: "Entorno",
+    concepto: ["concepto-jamas-visto"], requiere: [], minutos: 10, xp: 100,
+    enunciado: "Instala algo.", exige: ["python_version"],
+    pasos: [{ texto: "Instala Python." }], pistas: ["una pista"],
+  });
+  assert.ok(!reglas([m]).includes("concepto-sin-ejemplo"));
 });

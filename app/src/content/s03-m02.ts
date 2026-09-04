@@ -14,6 +14,11 @@ export const s03m02: Mision = {
     "Un numero es par cuando el resto de dividirlo entre 2 es cero. Guarda el resultado en `total`.",
   plantilla: "total = 0\n\n# tu codigo aqui\n",
   solucion: "total = 0\nfor n in numeros:\n    if n % 2 == 0:\n        total = total + n\n",
+  ejemplo: {
+    situacion: "Contar cuantos gatos hay en una lista de animales.",
+    codigo: "gatos = 0\n\nfor animal in [\"gato\", \"perro\", \"gato\"]:\n    if animal == \"gato\":\n        gatos = gatos + 1\n\n# al terminar, gatos vale 2",
+    comentario: "`for` recorre la lista y te entrega un elemento por vuelta, sin que tengas que llevar tu la cuenta. `if` decide si esa vuelta suma o no. Fijate en las dos sangrias: el `if` esta dentro del `for`, y la suma dentro del `if`. Aparte, el operador `%` da el resto de una division: `10 % 3` vale 1, y `10 % 2` vale 0.",
+  },
   salida: "total",
   pruebas: [
     { entrada: { numeros: [4, 7, 2, 9, 12] }, salida: 18, oculta: false },

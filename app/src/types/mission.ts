@@ -51,10 +51,23 @@ const BaseSchema = z.object({
   pistas: z.array(z.string()).min(1),
 });
 
+/**
+ * Un problema parecido, ya resuelto y explicado. No es la solucion de la
+ * mision: es la primera vez que alguien ve como se escribe el concepto.
+ * Entender que hay que hacer y saber escribirlo son dos cosas distintas.
+ */
+export const EjemploSchema = z.object({
+  situacion: z.string(),
+  codigo: z.string(),
+  comentario: z.string(),
+});
+
 /** Se resuelve escribiendo Python en el editor. */
 export const MisionCodigoSchema = BaseSchema.extend({
   tipo: z.literal("codigo"),
   plantilla: z.string(),
+  // Obligatorio cuando la mision estrena un concepto; el validador lo exige.
+  ejemplo: EjemploSchema.optional(),
   // Solucion de referencia. El validador la ejecuta contra las pruebas de la
   // propia mision: es lo que permite detectar pruebas contradictorias,
   // restricciones imposibles de cumplir y presupuestos de ops irreales.
@@ -92,6 +105,7 @@ export type Prueba = z.infer<typeof PruebaSchema>;
 export type Sensor = z.infer<typeof SensorSchema>;
 export type Restricciones = z.infer<typeof RestriccionesSchema>;
 export type FalloPrevisto = z.infer<typeof FalloPrevistoSchema>;
+export type Ejemplo = z.infer<typeof EjemploSchema>;
 export type Paso = z.infer<typeof PasoSchema>;
 export type MisionCodigo = z.infer<typeof MisionCodigoSchema>;
 export type MisionEntorno = z.infer<typeof MisionEntornoSchema>;

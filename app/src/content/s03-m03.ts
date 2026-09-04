@@ -14,6 +14,11 @@ export const s03m03: Mision = {
     "En cuanto lo encuentres deja de buscar. Si no hay ninguno, `posicion` vale -1.",
   plantilla: "posicion = -1\n\n# tu codigo aqui\n",
   solucion: "posicion = -1\nfor i in range(len(lecturas)):\n    if lecturas[i] < 0:\n        posicion = i\n        break\n",
+  ejemplo: {
+    situacion: "Encontrar en que posicion aparece la primera letra 'l' de una palabra.",
+    codigo: "palabra = \"hola\"\ndonde = -1\n\nfor i in range(len(palabra)):\n    if palabra[i] == \"l\":\n        donde = i\n        break\n\n# al terminar, donde vale 2",
+    comentario: "`range(len(palabra))` da las posiciones 0, 1, 2... en vez de las letras, y `palabra[i]` es la letra que hay en la posicion `i`. Las posiciones empiezan en 0, asi que la 'h' es la 0. `break` corta el bucle en el acto: sin el, el bucle seguiria hasta el final y `donde` acabaria guardando la ultima coincidencia en vez de la primera.",
+  },
   salida: "posicion",
   pruebas: [
     { entrada: { lecturas: [8, 3, -4, 7, -9] }, salida: 2, oculta: false },
