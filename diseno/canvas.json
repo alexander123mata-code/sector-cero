@@ -1,0 +1,39 @@
+{
+  "artboards": [
+    { "file": "Arranque.dc.html", "x": 0, "y": 0, "w": 1440, "h": 900 },
+    { "file": "Mapa.dc.html", "x": 1560, "y": 0, "w": 1440, "h": 900 },
+    { "file": "Main.dc.html", "x": 0, "y": 1080, "w": 1440, "h": 900 },
+    { "file": "Evaluacion.dc.html", "x": 1560, "y": 1080, "w": 1000, "h": 820 }
+  ],
+  "annotations": [
+    {
+      "id": "nota-arranque",
+      "x": 0,
+      "y": -190,
+      "w": 440,
+      "text": "1 · ARRANQUE\nPyodide pesa ~10 MB y esa espera es el riesgo 02 del blueprint. En vez de esconderla, la secuencia de arranque la convierte en ficción — y aprovecha para recordar que el Sector 00 se juega en la terminal."
+    },
+    {
+      "id": "nota-mapa",
+      "x": 1560,
+      "y": -190,
+      "w": 440,
+      "text": "2 · MAPA\nDos bandas, no un pasillo: Capa A (navegador) y Capa B (tu máquina), separadas por el divisor PUENTE. Ese cruce es donde más gente abandona, así que el mapa lo señala desde el principio en vez de esconderlo."
+    },
+    {
+      "id": "nota-mision",
+      "x": 0,
+      "y": 2010,
+      "w": 460,
+      "text": "3 · MISIÓN\nLa pantalla donde se pasa el 90% del tiempo. La pieza diferencial es el panel EL EVALUADOR DICE: feedback específico del campo fallos_previstos, no «prueba 2 fallida». La consola muestra la traza que revela el error, lectura a lectura."
+    },
+    {
+      "id": "nota-evaluacion",
+      "x": 1560,
+      "y": 1930,
+      "w": 460,
+      "text": "4 · EVALUACIÓN\nTres niveles, tres estrellas. El Nivel 3 mide operaciones contra un presupuesto: así se siente O(n²) antes de definirlo. Aquí se ve la misión ya resuelta; la pantalla de misión muestra el estado fallido de la misma misión."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+  <style>
+    body { margin: 0; background: #0A0B10; font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif; }
+    a { color: #FF3D7F; text-decoration: none; }
+    a:hover { color: #FF6E9C; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; height: 900px; background: #0A0B10; color: #C8CEE0; display: flex; flex-direction: column; overflow: hidden;">
+
+  <div style="height: 52px; flex-shrink: 0; border-bottom: 2px solid #262A3A; background: #12141C; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
+    <div style="display: flex; align-items: center; gap: 18px;">
+      <span style="font-family: 'Silkscreen', 'Courier New', monospace; font-size: 14px; color: #FFFFFF; letter-spacing: 0.02em;">SECTOR<span style="color: #FF3D7F;">·</span>CERO</span>
+      <span style="width: 2px; height: 20px; background: #262A3A;"></span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #727A96; letter-spacing: 0.04em;">SECTOR 03 · ESTRUCTURAS DE CONTROL</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #4DE0A0;">misión 07 / 24</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <span style="display: flex; align-items: center; gap: 7px; border: 1px solid #4A3A22; background: #17130A; padding: 6px 11px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #FFB84D;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FFB84D" stroke-width="2.2" stroke-linejoin="round"><path d="M12 3l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.8 6.2 20.9l1.1-6.5L2.6 9.8l6.5-.9z"/></svg>
+        2 480 XP
+      </span>
+      <span style="display: flex; align-items: center; gap: 7px; border: 1px solid #262A3A; background: #171A25; padding: 6px 11px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #C8CEE0;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#FF3D7F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2s5 5 5 9a5 5 0 0 1-10 0c0-1.6.7-3.2 1.6-4.5"/></svg>
+        racha 9
+      </span>
+      <span style="width: 32px; height: 32px; border: 2px solid #FF3D7F; background: #171A25; display: flex; align-items: center; justify-content: center; font-family: 'Silkscreen', 'Courier New', monospace; font-size: 11px; color: #FF3D7F;">BM</span>
+    </div>
+  </div>
+
+  <div style="flex-grow: 1; display: flex; align-items: stretch; min-height: 0;">
+
+    <div style="width: 372px; flex-shrink: 0; border-right: 2px solid #262A3A; background: #0E101A; padding: 22px; display: flex; flex-direction: column; gap: 20px; overflow: hidden;">
+
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <span style="font-family: 'Silkscreen', 'Courier New', monospace; font-size: 10px; color: #727A96; letter-spacing: 0.09em;">BRIEFING</span>
+        <h1 style="margin: 0; font-family: 'Silkscreen', 'Courier New', monospace; font-size: 13px; font-weight: 400; color: #FFFFFF; line-height: 1.65; letter-spacing: 0.01em;">El bucle que no sabe cuándo parar</h1>
+      </div>
+
+      <p style="margin: 0; font-size: 14px; line-height: 1.65; color: #C8CEE0; text-wrap: pretty;">El sensor devuelve una lectura cada vez que lo llamas. Cuando se queda sin datos devuelve <span style="font-family: 'IBM Plex Mono', monospace; color: #FFB84D;">-1</span>. Suma todas las lecturas válidas y detén el bucle en cuanto aparezca ese centinela.</p>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #9BA3BE; border: 1px solid #262A3A; background: #12141C; padding: 4px 8px;">while</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #9BA3BE; border: 1px solid #262A3A; background: #12141C; padding: 4px 8px;">centinela</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #9BA3BE; border: 1px solid #262A3A; background: #12141C; padding: 4px 8px;">acumulador</span>
+      </div>
+
+      <div style="height: 2px; background: #1C2030;"></div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <span style="font-family: 'Silkscreen', 'Courier New', monospace; font-size: 10px; color: #727A96; letter-spacing: 0.09em;">PRUEBAS VISIBLES</span>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; align-items: center; gap: 12px; border: 1px solid #262A3A; background: #12141C; padding: 10px 12px;">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: #C8CEE0; flex-grow: 1;">[12, 8, 5, -1]</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4C5470" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: #4DE0A0; min-width: 26px; text-align: right;">25</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; border: 1px solid #262A3A; background: #12141C; padding: 10px 12px;">
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: #C8CEE0; flex-grow: 1;">[-1]</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4C5470" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: #4DE0A0; min-width: 26px; text-align: right;">0</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px; border: 1px dashed #262A3A; background: #0C0E16; padding: 10px 12px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4C5470" stroke-width="2.2" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: #4C5470; flex-grow: 1;">1 prueba oculta</span>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #4C5470;">tras las visibles</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: auto; display: flex; flex-direction: column; gap: 7px; border-top: 2px solid #1C2030; padding-top: 14px;">
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #727A96;">12 min estimados · 120 XP</span>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #727A96;">requiere s03-m05 · s03-m06</span>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1; display: flex; flex-direction: column; min-width: 0; background: #0A0B10;">
+
+      <div style="height: 40px; flex-shrink: 0; border-bottom: 2px solid #262A3A; background: #12141C; display: flex; align-items: stretch;">
+        <div style="display: flex; align-items: center; gap: 9px; padding: 0 18px; background: #0A0B10; border-right: 2px solid #262A3A;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#4DE0A0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h5a4 4 0 0 1 4 4v4H7"/><path d="M16 20h-5a4 4 0 0 1-4-4v-4h10"/></svg>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: #EEF1F8;">mision.py</span>
+          <span style="width: 6px; height: 6px; background: #FFB84D;"></span>
+        </div>
+        <div style="flex-grow: 1;"></div>
+        <div style="display: flex; align-items: center; gap: 14px; padding: 0 18px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #727A96;">python 3.12 · wasm</span>
+          <span style="display: flex; align-items: center; gap: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #4DE0A0;">
+            <span style="width: 7px; height: 7px; background: #4DE0A0;"></span>listo
+          </span>
+        </div>
+      </div>
+
+      <div style="flex-grow: 1; display: flex; align-items: stretch; min-height: 0; overflow: hidden;">
+        <div style="width: 52px; flex-shrink: 0; background: #0C0E16; border-right: 1px solid #1C2030; padding: 20px 0; display: flex; flex-direction: column; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 26px; color: #3D4460;">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span style="color: #FF3D7F;">8</span>
+        </div>
+        <div style="flex-grow: 1; padding: 20px 24px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; line-height: 26px; color: #C8CEE0; white-space: pre;"><span>total</span> <span style="color: #727A96;">=</span> <span style="color: #FFB84D;">0</span>
+
+<span style="color: #FF3D7F;">while</span> <span style="color: #FF3D7F;">True</span><span style="color: #727A96;">:</span>
+    <span>lectura</span> <span style="color: #727A96;">=</span> <span style="color: #4DE0A0;">leer_sensor</span><span style="color: #727A96;">()</span>
+    <span>total</span> <span style="color: #727A96;">=</span> <span>total</span> <span style="color: #727A96;">+</span> <span>lectura</span>
+
+    <span style="color: #FF3D7F;">if</span> <span>lectura</span> <span style="color: #727A96;">==</span> <span style="color: #FFB84D;">-1</span><span style="color: #727A96;">:</span>
+        <span style="color: #FF3D7F;">break</span><span style="background: #FF3D7F; color: #0A0B10;">&#9612;</span></div>
+      </div>
+
+      <div style="height: 76px; flex-shrink: 0; border-top: 2px solid #262A3A; background: #12141C; display: flex; align-items: center; justify-content: space-between; padding: 0 20px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <button style="height: 44px; display: flex; align-items: center; gap: 9px; border: 2px solid #262A3A; background: #171A25; color: #C8CEE0; padding: 0 18px; font-family: 'Silkscreen', 'Courier New', monospace; font-size: 11px; cursor: pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#C8CEE0" stroke="none"><path d="M6 4l14 8-14 8z"/></svg>
+            EJECUTAR
+          </button>
+          <button style="height: 44px; display: flex; align-items: center; gap: 9px; border: 2px solid #FF3D7F; background: #FF3D7F; color: #0A0B10; padding: 0 20px; font-family: 'Silkscreen', 'Courier New', monospace; font-size: 11px; box-shadow: 4px 4px 0 #7A1D3C; cursor: pointer;">
+            ENVIAR
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A0B10" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #727A96;">intento 3</span>
+          <button style="height: 44px; display: flex; align-items: center; gap: 9px; border: 2px solid #4A3A22; background: transparent; color: #FFB84D; padding: 0 16px; font-family: 'Silkscreen', 'Courier New', monospace; font-size: 11px; cursor: pointer;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFB84D" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.2a2.5 2.5 0 1 1 3.2 2.4c-.6.2-.9.7-.9 1.3v.5"/><path d="M12 16.8v.4"/></svg>
+            PISTA 2 / 3
+            <span style="color: #7A6234;">&#8722;20 XP</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div style="width: 380px; flex-shrink: 0; border-left: 2px solid #262A3A; background: #0E101A; padding: 22px; display: flex; flex-direction: column; gap: 20px; overflow: hidden;">
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <span style="font-family: 'Silkscreen', 'Courier New', monospace; font-size: 10px; color: #727A96; letter-spacing: 0.09em;">CONSOLA</span>
+        <div style="border: 2px solid #262A3A; background: #08090F; padding: 14px 15px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 21px; white-space: pre;"><span style="color: #4C5470;">&gt;&gt;&gt; ejecutando mision.py</span>
+<span style="color: #727A96;">    lectura  12  ·  total  12</span>
+<span style="color: #727A96;">    lectura   8  ·  total  20</span>
+<span style="color: #727A96;">    lectura   5  ·  total  25</span>
+<span style="color: #FFB84D;">    lectura  -1  ·  total  24</span>
+<span style="color: #FF3D7F;">&lt;&lt;&lt; devuelto: 24</span></div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <span style="font-family: 'Silkscreen', 'Courier New', monospace; font-size: 10px; color: #727A96; letter-spacing: 0.09em;">RESTRICCIONES</span>
+        <div style="display: flex; flex-direction: column; gap: 7px;">
+          <div style="display: flex; align-items: center; gap: 10px; padding: 9px 12px; border: 1px solid #2E4A3D; background: #0C1712;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4DE0A0" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.5 5.5L20 6"/></svg>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #C8CEE0; flex-grow: 1;">usa <span style="color: #4DE0A0;">while</span></span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; padding: 9px 12px; border: 1px solid #2E4A3D; background: #0C1712;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4DE0A0" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.5 5.5L20 6"/></svg>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #C8CEE0; flex-grow: 1;">sin <span style="color: #4DE0A0;">for</span> ni <span style="color: #4DE0A0;">return</span></span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px; padding: 9px 12px; border: 1px solid #4A3A22; background: #17130A;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFB84D" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5"/><path d="M12 16.3v.4"/></svg>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: #C8CEE0; flex-grow: 1;">46 ops</span>
+            <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #FFB84D;">presupuesto 40</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <span style="font-family: 'Silkscreen', 'Courier New', monospace; font-size: 10px; color: #FF3D7F; letter-spacing: 0.09em;">EL EVALUADOR DICE</span>
+        <div style="border: 2px solid #4A2338; border-left: 5px solid #FF3D7F; background: #150C12; padding: 16px 17px; display: flex; flex-direction: column; gap: 11px;">
+          <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #EEF1F8;">Casi. Estás sumando el <span style="font-family: 'IBM Plex Mono', monospace; color: #FF3D7F;">-1</span> al total: sal del bucle <em style="color: #FF3D7F; font-style: normal; font-weight: 600;">antes</em> de acumular.</p>
+          <div style="height: 1px; background: #3A1C2C;"></div>
+          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #A87A90;">prueba 1 · esperaba 25 · obtuvo 24</span>
+        </div>
+      </div>
+
+      <div style="margin-top: auto; display: flex; align-items: center; gap: 10px; border-top: 2px solid #1C2030; padding-top: 14px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#727A96" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h9"/></svg>
+        <span style="font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: #727A96; flex-grow: 1;">bitácora · tus 2 intentos</span>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#727A96" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</x-dc>
+</body>
+</html>
