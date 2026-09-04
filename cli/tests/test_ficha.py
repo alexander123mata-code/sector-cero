@@ -19,7 +19,11 @@ class Ficha(unittest.TestCase):
 
     def test_rechaza_una_ficha_corrupta(self):
         f = emitir([r("pip", True)])
-        self.assertIsNone(leer(f[:-1] + "0"))
+        # El caracter de sustitucion tiene que ser distinto del que habia: la
+        # suma depende del reloj, asi que fijar un "0" hacia que el test pasara
+        # o fallara segun la hora.
+        otro = "1" if f[-1] == "0" else "0"
+        self.assertIsNone(leer(f[:-1] + otro))
 
     def test_rechaza_texto_que_no_es_una_ficha(self):
         for basura in ["", "hola", "a.b.c", "....", "!!!.deadbeef"]:
