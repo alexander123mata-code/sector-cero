@@ -1,8 +1,9 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Evaluacion, MisionCodigo } from "../types/mission";
 import { CANCELADO, type Runner } from "../engine/runner";
 import { evaluar } from "../engine/evaluate";
 import { usarProgreso } from "../store/progress";
+import { registrar } from "../telemetria/registro";
 import { Briefing } from "./Briefing";
 import { Resultado } from "./Resultado";
 import { Editor } from "./Editor";
@@ -18,10 +19,14 @@ export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
   const [corriendo, setCorriendo] = useState(false);
   const [sesion, setSesion] = useState<Sesion | null>(null);
 
+  useEffect(() => {
+    registrar({ tipo: "abre", mision: mision.id, t: Date.now() });
+  }, [mision.id]);
+
   const est = usarProgreso((s) => s.porMision[mision.id]);
   const escribir = usarProgreso((s) => s.escribir);
   const pedirPista = usarProgreso((s) => s.pedirPista);
-  const registrar = usarProgreso((s) => s.registrar);
+  const anotar = usarProgreso((s) => s.registrar);
 
   // Se deriva en el render en lugar de resetearse con un efecto.
   const vista: Sesion =
@@ -41,7 +46,28 @@ export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
         casos: mision.pruebas.map((p) => JSON.stringify(p.entrada)),
       });
       const ev = evaluar(mision, nodos, casos);
-      registrar(mision.id, ev.estrellas, ev.superada);
+      registrar({
+        tipo: "envia",
+        mision: mision.id,
+        t: Date.now(),
+        intento: est.intentos + 1,
+        codigo: est.codigo,
+        superada: ev.superada,
+        estrellas: ev.estrellas,
+        ops: ev.ops,
+        nodos,
+        fallos: ev.pruebas
+          .filter((p) => !p.paso)
+          .map((p) => ({
+            prueba: p.indice,
+            oculta: p.oculta,
+            esperado: p.esperado,
+            obtenido: p.obtenido,
+            error: p.error,
+            timeout: p.timeout,
+          })),
+      });
+      anotar(mision.id, ev.estrellas, ev.superada);
       const impreso = casos.map((c) => c.impreso ?? "").join("").trim();
       setSesion({
         id: mision.id,
@@ -64,7 +90,7 @@ export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
     } finally {
       setCorriendo(false);
     }
-  }, [corriendo, est.codigo, mision, registrar, runner]);
+  }, [corriendo, est.codigo, est.intentos, mision, anotar, runner]);
 
   const quedanPistas = est.pistasUsadas < mision.pistas.length;
 
@@ -89,7 +115,14 @@ export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
               <span className="mono" style={{ fontSize: 11.5, color: "var(--dim)" }}>
                 intento {est.intentos}
               </span>
-              <button className="aviso" onClick={() => pedirPista(mision.id)} disabled={!quedanPistas}>
+              <button
+                className="aviso"
+                onClick={() => {
+                  registrar({ tipo: "pista", mision: mision.id, t: Date.now(), numero: est.pistasUsadas + 1 });
+                  pedirPista(mision.id);
+                }}
+                disabled={!quedanPistas}
+              >
                 {quedanPistas
                   ? `PISTA ${est.pistasUsadas + 1} / ${mision.pistas.length}  −20 XP`
                   : "SIN MAS PISTAS"}

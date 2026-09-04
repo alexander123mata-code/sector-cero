@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "validar": "tsx tools/validar.ts",
     "mision:nueva": "tsx tools/nueva.ts",
-    "test": "tsx --test tools/*.test.ts"
+    "test": "tsx --test tools/*.test.ts",
+    "informe": "tsx tools/informe.ts"
   },
   "dependencies": {
     "@codemirror/commands": "^6.11.0",
