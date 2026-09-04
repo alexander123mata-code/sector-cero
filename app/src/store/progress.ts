@@ -123,5 +123,8 @@ export const desbloqueada = (
 ): boolean => {
   const m = misiones.find((x) => x.id === id);
   if (!m) return false;
+  // Una mision ya superada sigue accesible aunque el grafo cambie despues:
+  // reencadenar el temario no puede quitarle a nadie algo que ya gano.
+  if (porMision[id]?.superada) return true;
   return m.requiere.every((r) => porMision[r]?.superada);
 };

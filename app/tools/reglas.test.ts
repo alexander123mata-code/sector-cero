@@ -133,3 +133,21 @@ test("rechaza una comprobacion que el CLI no conoce", () => {
   });
   assert.ok(reglas([m]).includes("comprobacion-desconocida"));
 });
+
+test("avisa de un salto de sector en el grafo", () => {
+  const a = base({ id: "a", sector: 0, requiere: [] });
+  const b = base({ id: "b", sector: 3, requiere: ["a"] });
+  assert.ok(reglas([a, b]).includes("salto-de-sector"));
+});
+
+test("no avisa cuando los sectores son consecutivos", () => {
+  const a = base({ id: "a", sector: 2, requiere: [] });
+  const b = base({ id: "b", sector: 3, requiere: ["a"] });
+  assert.ok(!reglas([a, b]).includes("salto-de-sector"));
+});
+
+test("no avisa entre misiones del mismo sector", () => {
+  const a = base({ id: "a", sector: 3, requiere: [] });
+  const b = base({ id: "b", sector: 3, requiere: ["a"] });
+  assert.ok(!reglas([a, b]).includes("salto-de-sector"));
+});
