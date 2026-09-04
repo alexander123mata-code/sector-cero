@@ -12,7 +12,7 @@ export const s03m03: Mision = {
   enunciado:
     "Encuentra la posicion del primer numero negativo de `lecturas` y guardala en `posicion`. " +
     "En cuanto lo encuentres deja de buscar. Si no hay ninguno, `posicion` vale -1.",
-  plantilla: "posicion = -1\n\n# tu codigo aqui\n",
+  plantilla: "# lecturas ya existe: cada prueba le pone su valor. No la declares tu.\n\nposicion = -1\n\n# tu codigo aqui\n",
   solucion: "posicion = -1\nfor i in range(len(lecturas)):\n    if lecturas[i] < 0:\n        posicion = i\n        break\n",
   ejemplo: {
     situacion: "Encontrar en que posicion aparece la primera letra 'l' de una palabra.",

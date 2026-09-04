@@ -40,13 +40,13 @@ export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
     setCorriendo(true);
     setSesion({ id: mision.id, estado: "Ejecutando contra las pruebas...", ev: null });
     try {
-      const { nodos, casos } = await runner.correr({
+      const { nodos, asignados, casos } = await runner.correr({
         codigo: est.codigo,
         salida: mision.salida,
         sensor: mision.sensor ? JSON.stringify(mision.sensor) : null,
         casos: mision.pruebas.map((p) => JSON.stringify(p.entrada)),
       });
-      const ev = evaluar(mision, nodos, casos);
+      const ev = evaluar(mision, nodos, asignados, casos);
       registrar({
         tipo: "envia",
         mision: mision.id,

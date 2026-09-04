@@ -46,10 +46,10 @@ export class Runner {
   correr(
     peticion: Omit<PeticionCorrer, "tipo">,
     onProgreso?: Progreso,
-  ): Promise<{ nodos: string[]; casos: SalidaCaso[] }> {
+  ): Promise<{ nodos: string[]; asignados: string[]; casos: SalidaCaso[] }> {
     return this.pedir({ tipo: "correr", ...peticion }, ESPERA_CORRER_MS, onProgreso).then((r) => {
       if (r.tipo !== "resultado") throw new Error("respuesta inesperada del worker");
-      return { nodos: r.nodos, casos: r.casos };
+      return { nodos: r.nodos, asignados: r.asignados, casos: r.casos };
     });
   }
 

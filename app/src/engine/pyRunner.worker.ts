@@ -24,7 +24,7 @@ export type SalidaCaso = {
 export type Respuesta =
   | { tipo: "progreso"; texto: string }
   | { tipo: "listo" }
-  | { tipo: "resultado"; nodos: string[]; casos: SalidaCaso[] }
+  | { tipo: "resultado"; nodos: string[]; asignados: string[]; casos: SalidaCaso[] }
   | { tipo: "fallo"; mensaje: string };
 
 type Piodide = {
@@ -58,13 +58,14 @@ self.onmessage = async (ev: MessageEvent<Peticion>) => {
 
     const analizar = p.globals.get("sc_nodos");
     const analisis = JSON.parse(analizar(msg.codigo)) as
-      | { ok: true; nodos: string[] }
+      | { ok: true; nodos: string[]; asignados: string[] }
       | { ok: false; error: string };
 
     if (!analisis.ok) {
       responder({
         tipo: "resultado",
         nodos: [],
+        asignados: [],
         casos: msg.casos.map(() => ({
           ok: false, timeout: false, ops: 0, traza: [], error: analisis.error,
         })),
@@ -76,7 +77,7 @@ self.onmessage = async (ev: MessageEvent<Peticion>) => {
     const casos: SalidaCaso[] = msg.casos.map(
       (entrada) => JSON.parse(correr(msg.codigo, entrada, msg.salida, msg.sensor)) as SalidaCaso,
     );
-    responder({ tipo: "resultado", nodos: analisis.nodos, casos });
+    responder({ tipo: "resultado", nodos: analisis.nodos, asignados: analisis.asignados, casos });
   } catch (e) {
     responder({ tipo: "fallo", mensaje: e instanceof Error ? e.message : String(e) });
   }
