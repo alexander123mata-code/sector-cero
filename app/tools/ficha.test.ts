@@ -35,7 +35,8 @@ test("tolera espacios y saltos al pegar", () => {
 });
 
 test("rechaza una ficha con un caracter cambiado", () => {
-  assert.equal(leerFicha(DOS.slice(0, -1) + "0"), null);
+  const otro = DOS.endsWith("0") ? "1" : "0";
+  assert.equal(leerFicha(DOS.slice(0, -1) + otro), null);
 });
 
 test("rechaza una ficha truncada al copiar", () => {
