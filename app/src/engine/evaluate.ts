@@ -1,5 +1,5 @@
 import type {
-  Evaluacion, Mision, Nivel, ResultadoPrueba,
+  Evaluacion, MisionCodigo, Nivel, ResultadoPrueba,
 } from "../types/mission";
 import type { SalidaCaso } from "./pyRunner.worker";
 
@@ -23,7 +23,7 @@ function leerValor(c: SalidaCaso): unknown {
 }
 
 /** El primer fallo previsto que encaja gana: el orden del autor es la prioridad. */
-function mensajeDe(mision: Mision, fallo: ResultadoPrueba | undefined): string | null {
+function mensajeDe(mision: MisionCodigo, fallo: ResultadoPrueba | undefined): string | null {
   if (!fallo) return null;
   for (const f of mision.fallosPrevistos) {
     const c = f.cuando;
@@ -42,7 +42,7 @@ function mensajeDe(mision: Mision, fallo: ResultadoPrueba | undefined): string |
 }
 
 export function evaluar(
-  mision: Mision,
+  mision: MisionCodigo,
   nodos: string[],
   casos: SalidaCaso[],
 ): Evaluacion {

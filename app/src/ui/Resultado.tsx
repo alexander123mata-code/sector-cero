@@ -1,7 +1,7 @@
-import type { Evaluacion, Mision } from "../types/mission";
+import type { Evaluacion, MisionCodigo } from "../types/mission";
 import { Estrellas } from "./Estrellas";
 
-type Props = { mision: Mision; ev: Evaluacion | null; estado: string };
+type Props = { mision: MisionCodigo; ev: Evaluacion | null; estado: string };
 
 const panel: React.CSSProperties = {
   border: "2px solid var(--line)",

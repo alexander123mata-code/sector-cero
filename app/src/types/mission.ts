@@ -38,7 +38,8 @@ export const FalloPrevistoSchema = z.object({
   dice: z.string(),
 });
 
-export const MisionSchema = z.object({
+/** Lo que toda mision tiene, se resuelva escribiendo codigo o montando el entorno. */
+const BaseSchema = z.object({
   id: z.string(),
   sector: z.number().int().nonnegative(),
   titulo: z.string(),
@@ -47,6 +48,12 @@ export const MisionSchema = z.object({
   minutos: z.number().int().positive(),
   xp: z.number().int().positive(),
   enunciado: z.string(),
+  pistas: z.array(z.string()).min(1),
+});
+
+/** Se resuelve escribiendo Python en el editor. */
+export const MisionCodigoSchema = BaseSchema.extend({
+  tipo: z.literal("codigo"),
   plantilla: z.string(),
   // Solucion de referencia. El validador la ejecuta contra las pruebas de la
   // propia mision: es lo que permite detectar pruebas contradictorias,
@@ -56,15 +63,42 @@ export const MisionSchema = z.object({
   sensor: SensorSchema.optional(),
   pruebas: z.array(PruebaSchema).min(1),
   restricciones: RestriccionesSchema,
-  pistas: z.array(z.string()).min(1),
   fallosPrevistos: z.array(FalloPrevistoSchema).default([]),
 });
+
+/** Un paso que el jugador ejecuta en su propia terminal. */
+export const PasoSchema = z.object({
+  texto: z.string(),
+  orden: z.string().optional(),
+});
+
+/**
+ * Se resuelve fuera del navegador: el jugador monta algo en su maquina, corre
+ * `sector verify` y pega la ficha. `exige` nombra las claves de comprobacion
+ * que esa ficha tiene que traer.
+ */
+export const MisionEntornoSchema = BaseSchema.extend({
+  tipo: z.literal("entorno"),
+  exige: z.array(z.string()).min(1),
+  pasos: z.array(PasoSchema).min(1),
+});
+
+export const MisionSchema = z.discriminatedUnion("tipo", [
+  MisionCodigoSchema,
+  MisionEntornoSchema,
+]);
 
 export type Prueba = z.infer<typeof PruebaSchema>;
 export type Sensor = z.infer<typeof SensorSchema>;
 export type Restricciones = z.infer<typeof RestriccionesSchema>;
 export type FalloPrevisto = z.infer<typeof FalloPrevistoSchema>;
+export type Paso = z.infer<typeof PasoSchema>;
+export type MisionCodigo = z.infer<typeof MisionCodigoSchema>;
+export type MisionEntorno = z.infer<typeof MisionEntornoSchema>;
 export type Mision = z.infer<typeof MisionSchema>;
+
+export const esCodigo = (m: Mision): m is MisionCodigo => m.tipo === "codigo";
+export const esEntorno = (m: Mision): m is MisionEntorno => m.tipo === "entorno";
 
 /** Resultado de un caso de prueba tras correr el codigo del jugador. */
 export type ResultadoPrueba = {

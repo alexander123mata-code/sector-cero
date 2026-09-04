@@ -1,11 +1,17 @@
 import { MisionSchema, type Mision } from "../types/mission";
+import { s00m01 } from "./s00-m01";
+import { s00m02 } from "./s00-m02";
+import { s00m03 } from "./s00-m03";
+import { s00m04 } from "./s00-m04";
+import { s00m05 } from "./s00-m05";
+import { s00m06 } from "./s00-m06";
 import { s03m01 } from "./s03-m01";
 import { s03m02 } from "./s03-m02";
 import { s03m03 } from "./s03-m03";
 import { s03m04 } from "./s03-m04";
 import { s03m05 } from "./s03-m05";
 
-const crudas = [s03m01, s03m02, s03m03, s03m04, s03m05];
+const crudas = [s00m01, s00m02, s00m03, s00m04, s00m05, s00m06, s03m01, s03m02, s03m03, s03m04, s03m05];
 
 /**
  * El esquema se valida al arrancar, no durante la partida: una mision mal
