@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+
+:root {
+  --void: #0a0b10;
+  --panel: #12141c;
+  --panel-2: #171a25;
+  --line: #262a3a;
+  --line-soft: #1c2030;
+  --ink: #c8cee0;
+  --ink-alto: #eef1f8;
+  --dim: #727a96;
+  --tenue: #4c5470;
+  --marquee: #ff3d7f;
+  --marquee-sombra: #7a1d3c;
+  --marquee-fondo: #150c12;
+  --marquee-borde: #4a2338;
+  --fosforo: #4de0a0;
+  --fosforo-fondo: #0c1712;
+  --fosforo-borde: #2e4a3d;
+  --ambar: #ffb84d;
+  --ambar-fondo: #17130a;
+  --ambar-borde: #4a3a22;
+
+  --px: "Silkscreen", "Courier New", monospace;
+  --cuerpo: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--cuerpo);
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: var(--px);
+  font-size: 11px;
+  border: 2px solid var(--line);
+  background: var(--panel-2);
+  color: var(--ink);
+  padding: 0 18px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) { border-color: var(--dim); }
+
+button:focus-visible {
+  outline: 2px solid var(--marquee);
+  outline-offset: 2px;
+}
+
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+button.principal {
+  border-color: var(--marquee);
+  background: var(--marquee);
+  color: var(--void);
+  box-shadow: 4px 4px 0 var(--marquee-sombra);
+}
+
+button.principal:hover:not(:disabled) { border-color: var(--marquee); }
+
+button.aviso {
+  border-color: var(--ambar-borde);
+  background: transparent;
+  color: var(--ambar);
+}
+
+.etiqueta {
+  font-family: var(--px);
+  font-size: 10px;
+  color: var(--dim);
+  letter-spacing: 0.09em;
+}
+
+.mono { font-family: var(--mono); }
+
+/* CodeMirror: el tema base viene de one-dark; solo se ajusta el marco. */
+.cm-editor { height: 100%; background: var(--void); }
+.cm-editor.cm-focused { outline: none; }
+.cm-scroller { font-family: var(--mono) !important; font-size: 13px; line-height: 26px; }
+.cm-gutters { background: #0c0e16 !important; border-right: 1px solid var(--line-soft) !important; }
