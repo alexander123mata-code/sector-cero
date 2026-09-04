@@ -1,7 +1,9 @@
-import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-// https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
   plugins: [react()],
-})
+  // En GitHub Pages el sitio cuelga de /sector-cero/, no de la raiz del
+  // dominio. En desarrollo se sirve desde la raiz para no complicar la URL.
+  base: command === "build" ? "/sector-cero/" : "/",
+}));
