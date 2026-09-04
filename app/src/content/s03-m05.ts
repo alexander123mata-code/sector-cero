@@ -12,6 +12,7 @@ export const s03m05: Mision = {
     "`rejilla` es una lista de filas, y cada fila es una lista de celdas. " +
     "Un 1 es un obstaculo y un 0 es suelo libre. Cuenta cuantos obstaculos hay en total y guardalo en `obstaculos`.",
   plantilla: "obstaculos = 0\n\n# tu codigo aqui\n",
+  solucion: "obstaculos = 0\nfor fila in rejilla:\n    for celda in fila:\n        if celda == 1:\n            obstaculos = obstaculos + 1\n",
   salida: "obstaculos",
   pruebas: [
     {

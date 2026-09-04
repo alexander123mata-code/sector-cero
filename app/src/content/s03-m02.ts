@@ -12,6 +12,7 @@ export const s03m02: Mision = {
     "Recorre la lista `numeros` y suma unicamente los que sean pares. " +
     "Un numero es par cuando el resto de dividirlo entre 2 es cero. Guarda el resultado en `total`.",
   plantilla: "total = 0\n\n# tu codigo aqui\n",
+  solucion: "total = 0\nfor n in numeros:\n    if n % 2 == 0:\n        total = total + n\n",
   salida: "total",
   pruebas: [
     { entrada: { numeros: [4, 7, 2, 9, 12] }, salida: 18, oculta: false },
