@@ -100,6 +100,28 @@ verde. Por eso hay tres niveles, y las estrellas miden algo real:
 El campo que marca la diferencia es `fallosPrevistos`: "prueba 2 fallida"
 ensena cero; "estas sumando el centinela" ensena el concepto.
 
+## Que reescribir: el registro de intentos
+
+Los mensajes de `fallosPrevistos` son la pieza que distingue esto de un
+cuestionario, y solo se aciertan mirando los errores que la gente comete de
+verdad. Por eso el juego guarda cada intento.
+
+**No sale de la maquina del jugador.** No hay servidor y no se envia nada: se
+acumula en el navegador y se exporta a mano con el boton REGISTRO de la
+cabecera. Tampoco se guarda nada que identifique a nadie, solo un id de sesion
+aleatorio para poder seguir un recorrido de principio a fin.
+
+Con los archivos que exporten los jugadores:
+
+```bash
+npm run informe -- registros/*.json
+```
+
+Dice, por mision, cuanta gente la supera, cuantos intentos y minutos cuesta,
+cuantas pistas se piden, y sobre todo que valores equivocados se repiten
+**distinguiendo los que ya tienen mensaje de los que no**. Esos ultimos son la
+lista de lo que hay que escribir.
+
 ## Validacion
 
 ```bash
