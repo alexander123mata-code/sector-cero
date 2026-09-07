@@ -92,3 +92,10 @@ button.aviso {
 .cm-editor.cm-focused { outline: none; }
 .cm-scroller { font-family: var(--mono) !important; font-size: 13px; line-height: 26px; }
 .cm-gutters { background: #0c0e16 !important; border-right: 1px solid var(--line-soft) !important; }
+
+/* Tira de misiones: se desplaza sin robarle alto a la cabecera. */
+.tira { scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.tira::-webkit-scrollbar { height: 4px; }
+.tira::-webkit-scrollbar-track { background: transparent; }
+.tira::-webkit-scrollbar-thumb { background: var(--line); }
+.tira::-webkit-scrollbar-thumb:hover { background: var(--dim); }
