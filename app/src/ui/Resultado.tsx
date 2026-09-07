@@ -2,7 +2,12 @@ import type { Evaluacion, MisionCodigo } from "../types/mission";
 import { Estrellas } from "./Estrellas";
 import { describeEntrada } from "./formato";
 
-type Props = { mision: MisionCodigo; ev: Evaluacion | null; estado: string };
+type Props = {
+  mision: MisionCodigo;
+  ev: Evaluacion | null;
+  estado: string;
+  pistasUsadas: number;
+};
 
 const panel: React.CSSProperties = {
   border: "2px solid var(--line)",
@@ -10,7 +15,7 @@ const panel: React.CSSProperties = {
   padding: "13px 15px",
 };
 
-export function Resultado({ mision, ev, estado }: Props) {
+export function Resultado({ mision, ev, estado, pistasUsadas }: Props) {
   return (
     <section
       style={{
@@ -87,6 +92,62 @@ export function Resultado({ mision, ev, estado }: Props) {
               </div>
             ))}
           </div>
+
+          {ev.superada && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <span className="etiqueta" style={{ color: "var(--fosforo)" }}>
+                LO QUE ACABAS DE CONSTRUIR
+              </span>
+              <div
+                style={{
+                  border: "2px solid var(--fosforo-borde)",
+                  borderLeft: "5px solid var(--fosforo)",
+                  background: "var(--fosforo-fondo)",
+                  padding: "15px 16px",
+                  display: "flex", flexDirection: "column", gap: 13,
+                }}
+              >
+                {pistasUsadas > 0 && (
+                  <p style={{ margin: 0, fontSize: 13, lineHeight: 1.55, color: "var(--ambar)" }}>
+                    Usaste {pistasUsadas === 1 ? "una pista" : `${pistasUsadas} pistas`}: lee esto con
+                    calma, es la parte que no llegaste a deducir por tu cuenta.
+                  </p>
+                )}
+                <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: "var(--ink-alto)" }}>
+                  {mision.repaso.resumen}
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  {mision.repaso.piezas.map((z, i) => (
+                    <div key={i} style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+                      <pre
+                        className="mono"
+                        style={{
+                          margin: 0, background: "#08090f", border: "1px solid var(--line)",
+                          padding: "8px 10px", fontSize: 12, lineHeight: "19px",
+                          color: "var(--fosforo)", overflowX: "auto",
+                        }}
+                      >
+                        {z.parte}
+                      </pre>
+                      <p style={{ margin: 0, fontSize: 13, lineHeight: 1.55, color: "var(--ink)" }}>
+                        {z.hace}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                {mision.repaso.ojo && (
+                  <p
+                    style={{
+                      margin: 0, fontSize: 13, lineHeight: 1.55, color: "var(--ink)",
+                      borderTop: "1px dashed var(--fosforo-borde)", paddingTop: 11,
+                    }}
+                  >
+                    {mision.repaso.ojo}
+                  </p>
+                )}
+              </div>
+            </div>
+          )}
 
           {ev.mensaje && (
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>

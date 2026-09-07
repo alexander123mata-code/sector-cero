@@ -20,6 +20,28 @@ export const s03m02: Mision = {
     comentario: "`for` recorre la lista y te entrega un elemento por vuelta, sin que tengas que llevar tu la cuenta. `if` decide si esa vuelta suma o no. Fijate en las dos sangrias: el `if` esta dentro del `for`, y la suma dentro del `if`. Aparte, el operador `%` da el resto de una division: `10 % 3` vale 1, y `10 % 2` vale 0.",
   },
   salida: "total",
+  repaso: {
+    "resumen": "Acabas de filtrar: recorrer una coleccion entera y quedarte solo con lo que cumple una condicion.",
+    "piezas": [
+      {
+        "parte": "total = 0",
+        "hace": "El acumulador, igual que en la mision anterior."
+      },
+      {
+        "parte": "for n in numeros:",
+        "hace": "Recorre la lista y te da un elemento por vuelta. A diferencia del while, aqui no llevas tu la cuenta: el bucle termina solo cuando se acaba la lista."
+      },
+      {
+        "parte": "if n % 2 == 0:",
+        "hace": "El operador % da el resto de una division. Si el resto entre 2 es 0, el numero es par. Esta es la condicion que decide si esta vuelta suma."
+      },
+      {
+        "parte": "total = total + n",
+        "hace": "Solo se ejecuta cuando el if se cumple, porque esta sangrado dentro de el."
+      }
+    ],
+    "ojo": "La sangria no es decoracion: es lo que dice que lineas estan dentro del if y cuales dentro del for. Cambiarla cambia el programa."
+  },
   pruebas: [
     { entrada: { numeros: [4, 7, 2, 9, 12] }, salida: 18, oculta: false },
     { entrada: { numeros: [] }, salida: 0, oculta: false },

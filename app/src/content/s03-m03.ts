@@ -20,6 +20,32 @@ export const s03m03: Mision = {
     comentario: "`range(len(palabra))` da las posiciones 0, 1, 2... en vez de las letras, y `palabra[i]` es la letra que hay en la posicion `i`. Las posiciones empiezan en 0, asi que la 'h' es la 0. `break` corta el bucle en el acto: sin el, el bucle seguiria hasta el final y `donde` acabaria guardando la ultima coincidencia en vez de la primera.",
   },
   salida: "posicion",
+  repaso: {
+    "resumen": "Acabas de hacer una busqueda: recorrer hasta encontrar algo y parar en cuanto aparece.",
+    "piezas": [
+      {
+        "parte": "posicion = -1",
+        "hace": "El valor de 'no encontrado'. Si el bucle termina sin encontrar nada, este es el que queda."
+      },
+      {
+        "parte": "for i in range(len(lecturas)):",
+        "hace": "range(len(...)) da las posiciones 0, 1, 2... en vez de los valores. Aqui necesitas la posicion, no el numero."
+      },
+      {
+        "parte": "if lecturas[i] < 0:",
+        "hace": "lecturas[i] es el valor que hay en la posicion i. Asi comparas el valor pero conservas donde estaba."
+      },
+      {
+        "parte": "posicion = i",
+        "hace": "Guarda donde lo encontraste."
+      },
+      {
+        "parte": "break",
+        "hace": "Corta el bucle en el acto. Sin el seguirias mirando y acabarias con la ultima coincidencia en vez de la primera."
+      }
+    ],
+    "ojo": "Parar al encontrar ahorra trabajo de verdad: en una lista larga, break es la diferencia entre mirar 3 elementos o 3000."
+  },
   pruebas: [
     { entrada: { lecturas: [8, 3, -4, 7, -9] }, salida: 2, oculta: false },
     { entrada: { lecturas: [1, 2, 3] }, salida: -1, oculta: false },

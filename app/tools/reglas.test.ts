@@ -18,6 +18,10 @@ function base(parches: Partial<Mision> = {}): Mision {
     plantilla: "total = 0\n",
     solucion: "total = 1\n",
     ejemplo: { situacion: "Un caso parecido.", codigo: "x = 1", comentario: "Asi se escribe." },
+    repaso: {
+      resumen: "Lo que acabas de construir.",
+      piezas: [{ parte: "x = 1", hace: "Guarda un uno." }],
+    },
     salida: "total",
     pruebas: [
       { entrada: { a: 1 }, salida: 1, oculta: false },
@@ -188,4 +192,24 @@ test("una mision de entorno no necesita ejemplo de codigo", () => {
     pasos: [{ texto: "Instala Python." }], pistas: ["una pista"],
   });
   assert.ok(!reglas([m]).includes("concepto-sin-ejemplo"));
+});
+
+test("detecta un caracter de control dentro del repaso", () => {
+  const m = base({
+    repaso: { resumen: "Algo.", piezas: [{ parte: "x\u0007= 1", hace: "Guarda." }] },
+  });
+  assert.ok(reglas([m]).includes("caracter-de-control"));
+});
+
+test("el esquema rechaza un repaso sin piezas", () => {
+  assert.throws(() =>
+    MisionSchema.parse({
+      tipo: "codigo", id: "s99-m9", sector: 99, titulo: "T", concepto: ["x"],
+      requiere: [], minutos: 5, xp: 10, enunciado: "E", plantilla: "a = 1",
+      solucion: "a = 1", salida: "a",
+      repaso: { resumen: "R", piezas: [] },
+      pruebas: [{ entrada: { a: 1 }, salida: 1 }],
+      restricciones: { presupuestoOps: 10 }, pistas: ["p"],
+    }),
+  );
 });

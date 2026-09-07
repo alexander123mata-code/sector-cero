@@ -20,6 +20,28 @@ export const s03m04: Mision = {
     comentario: "Un centinela es un valor acordado que significa 'se acabo'. Aqui es el 0. `while True` repite sin condicion propia, asi que la unica forma de salir es el `break`. Fijate en el orden: primero se comprueba si es el centinela y se sale, y solo despues se cuenta. Si lo haces al reves, cuentas tambien la caja vacia.",
   },
   salida: "total",
+  repaso: {
+    "resumen": "Acabas de usar un centinela: un valor acordado que significa 'se acabo', para leer datos cuando no sabes cuantos son.",
+    "piezas": [
+      {
+        "parte": "while True:",
+        "hace": "Repite sin condicion propia. La unica forma de salir es el break de dentro, asi que tiene que haber uno."
+      },
+      {
+        "parte": "lectura = leer_sensor()",
+        "hace": "Pide el siguiente dato. Cada llamada devuelve uno distinto, y no sabes cuantos habra."
+      },
+      {
+        "parte": "if lectura == -1:\n    break",
+        "hace": "Comprueba el centinela y sale. Va antes de sumar, no despues."
+      },
+      {
+        "parte": "total = total + lectura",
+        "hace": "Solo se llega aqui si la lectura era valida, porque el break ya se llevo el caso del centinela."
+      }
+    ],
+    "ojo": "El orden lo es todo. Si sumas antes de comprobar, el -1 entra en el total y sale 24 en vez de 25. Es el error mas comun de esta mision."
+  },
   sensor: { nombre: "leer_sensor", desde: "lecturas", agotado: -1 },
   pruebas: [
     { entrada: { lecturas: [12, 8, 5, -1] }, salida: 25, oculta: false },

@@ -151,7 +151,12 @@ export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
             </div>
           </div>
         </main>
-      <Resultado mision={mision} ev={vista.ev} estado={vista.estado} />
+      <Resultado
+        mision={mision}
+        ev={vista.ev}
+        estado={vista.estado}
+        pistasUsadas={est.pistasUsadas}
+      />
     </div>
   );
 }
