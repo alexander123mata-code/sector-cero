@@ -25,7 +25,7 @@ export const s03m01: Mision = {
     "piezas": [
       {
         "parte": "total = 0",
-        "hace": "Guarda la suma. Empieza en 0 porque todavia no has sumado nada; si empezara en otro numero, ese numero se colaria en el resultado."
+        "hace": "Guarda la suma. Aqui si hay que crearla antes del bucle, y es la diferencia con la mision del if: `total = total + n` lee el valor anterior de total, asi que tiene que existir ya. Empieza en 0 porque todavia no has sumado nada; con otro numero, ese numero se colaria en el resultado."
       },
       {
         "parte": "n = 1",

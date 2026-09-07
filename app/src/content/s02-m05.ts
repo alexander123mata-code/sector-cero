@@ -41,10 +41,10 @@ export const s02m05: Mision = {
       },
       {
         "parte": "puede = \"si\"",
-        "hace": "Esta sangrado dentro del if, asi que solo ocurre en ese camino."
+        "hace": "Esta sangrado dentro del if, asi que solo ocurre en ese camino. Fijate en que `puede` no existia antes: en Python una variable nace en el momento en que le asignas algo, no hay que declararla primero."
       }
     ],
-    "ojo": "Ojo a >= frente a >: con > los de 18 anos exactos se quedarian fuera. Ese detalle de un solo caracter es el error mas comun al comparar."
+    "ojo": "No siempre hace falta crear la variable antes de un if: aqui se crea sola en cada camino. Solo hay que crearla antes cuando vas a leer su valor anterior, como pasa al ir acumulando. Ojo tambien a >= frente a >: con > los de 18 anos exactos se quedarian fuera. Ese detalle de un solo caracter es el error mas comun al comparar."
   },
   pruebas: [
     {
