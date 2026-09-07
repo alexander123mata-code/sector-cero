@@ -6,7 +6,7 @@ export const s03m01: Mision = {
   sector: 3,
   titulo: "El contador que no cuenta",
   concepto: ["while", "contador", "acumulador"],
-  requiere: ["s00-m06-commit"],
+  requiere: ["s02-m05-decision"],
   minutos: 8,
   xp: 80,
   enunciado:
