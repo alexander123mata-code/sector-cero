@@ -7,6 +7,7 @@ import { registrar } from "../telemetria/registro";
 import { Briefing } from "./Briefing";
 import { Resultado } from "./Resultado";
 import { Editor, type EditorHandle } from "./Editor";
+import { Disponibles } from "./Disponibles";
 
 const LISTO = "Interprete listo. Escribe tu solucion y pulsa ENVIAR.";
 
@@ -106,6 +107,7 @@ export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
     <div style={{ flexGrow: 1, display: "flex", minHeight: 0 }}>
         <Briefing mision={mision} pistasUsadas={est.pistasUsadas} />
         <main style={{ flexGrow: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
+          <Disponibles mision={mision} />
           <div style={{ flexGrow: 1, minHeight: 0 }}>
             <Editor ref={editor} clave={mision.id} valor={est.codigo} onCambio={(v) => escribir(mision.id, v)} />
           </div>
