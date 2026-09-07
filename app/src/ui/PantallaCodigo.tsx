@@ -8,6 +8,8 @@ import { Briefing } from "./Briefing";
 import { Resultado } from "./Resultado";
 import { Editor, type EditorHandle } from "./Editor";
 import { Disponibles } from "./Disponibles";
+import { useCabenTresPaneles } from "./medidas";
+import { Pestanas, type Pestana } from "./Pestanas";
 
 const LISTO = "Interprete listo. Escribe tu solucion y pulsa ENVIAR.";
 
@@ -17,6 +19,8 @@ type Sesion = { id: string; estado: string; ev: Evaluacion | null };
 type Props = { mision: MisionCodigo; runner: Runner; listo: boolean; arranque: string };
 
 export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
+  const cabenTres = useCabenTresPaneles();
+  const [pestana, setPestana] = useState<Pestana>("briefing");
   const editor = useRef<EditorHandle>(null);
   const [corriendo, setCorriendo] = useState(false);
   const [sesion, setSesion] = useState<Sesion | null>(null);
@@ -48,6 +52,7 @@ export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
         casos: mision.pruebas.map((p) => JSON.stringify(p.entrada)),
       });
       const ev = evaluar(mision, nodos, asignados, casos);
+      setPestana("resultado");
       registrar({
         tipo: "envia",
         mision: mision.id,
@@ -105,7 +110,30 @@ export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
 
   return (
     <div style={{ flexGrow: 1, display: "flex", minHeight: 0 }}>
+        {cabenTres ? (
         <Briefing mision={mision} pistasUsadas={est.pistasUsadas} />
+      ) : (
+        <div
+          style={{
+            width: 380, flexShrink: 0, borderRight: "2px solid var(--line)",
+            display: "flex", flexDirection: "column", minHeight: 0,
+          }}
+        >
+          <Pestanas activa={pestana} onCambio={setPestana} hayResultado={!!vista.ev} />
+          <div style={{ flexGrow: 1, minHeight: 0, display: "flex" }}>
+            {pestana === "briefing" ? (
+              <Briefing mision={mision} pistasUsadas={est.pistasUsadas} />
+            ) : (
+              <Resultado
+                mision={mision}
+                ev={vista.ev}
+                estado={vista.estado}
+                pistasUsadas={est.pistasUsadas}
+              />
+            )}
+          </div>
+        </div>
+      )}
         <main style={{ flexGrow: 1, display: "flex", flexDirection: "column", minWidth: 0 }}>
           <Disponibles mision={mision} />
           <div style={{ flexGrow: 1, minHeight: 0 }}>
@@ -113,9 +141,10 @@ export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
           </div>
           <div
             style={{
-              height: 76, flexShrink: 0, borderTop: "2px solid var(--line)",
+              flexShrink: 0, borderTop: "2px solid var(--line)",
               background: "var(--panel)", display: "flex", alignItems: "center",
-              justifyContent: "space-between", padding: "0 20px",
+              justifyContent: "space-between", padding: "12px 20px",
+              gap: 12, flexWrap: "wrap",
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
@@ -153,12 +182,14 @@ export function PantallaCodigo({ mision, runner, listo, arranque }: Props) {
             </div>
           </div>
         </main>
-      <Resultado
-        mision={mision}
-        ev={vista.ev}
-        estado={vista.estado}
-        pistasUsadas={est.pistasUsadas}
-      />
+      {cabenTres && (
+        <Resultado
+          mision={mision}
+          ev={vista.ev}
+          estado={vista.estado}
+          pistasUsadas={est.pistasUsadas}
+        />
+      )}
     </div>
   );
 }
