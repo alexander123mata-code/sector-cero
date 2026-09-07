@@ -20,6 +20,32 @@ export const s03m01: Mision = {
     comentario: "Hay tres piezas. `total` guarda lo que llevas acumulado y empieza en 0. `veces` cuenta las vueltas y sube de una en una. La condicion `veces < 3` decide si hay otra vuelta: cuando deja de ser cierta, el bucle termina. Las lineas de dentro van sangradas cuatro espacios; asi sabe Python que pertenecen al while. Ojo a una diferencia con tu mision: aqui siempre se suma lo mismo (10), mientras que a ti te toca sumar un numero que cambia en cada vuelta.",
   },
   salida: "total",
+  repaso: {
+    "resumen": "Acabas de construir un acumulador: una variable que va guardando un total mientras un bucle recorre los numeros uno a uno.",
+    "piezas": [
+      {
+        "parte": "total = 0",
+        "hace": "Guarda la suma. Empieza en 0 porque todavia no has sumado nada; si empezara en otro numero, ese numero se colaria en el resultado."
+      },
+      {
+        "parte": "n = 1",
+        "hace": "El numero por el que vas. Empieza en 1 porque es el primero que hay que sumar."
+      },
+      {
+        "parte": "while n <= objetivo:",
+        "hace": "Decide si hay otra vuelta. Con <= el propio objetivo entra en la suma; con < se quedaria fuera y saldria 10 en vez de 15."
+      },
+      {
+        "parte": "total = total + n",
+        "hace": "Anade a lo que llevas el numero de esta vuelta. Es + n, no + 1: sumas el numero, no cuentas vueltas."
+      },
+      {
+        "parte": "n = n + 1",
+        "hace": "Pasa al siguiente numero. Sin esta linea n nunca cambia, la condicion siempre se cumple y el bucle no termina."
+      }
+    ],
+    "ojo": "Ese patron (una variable que acumula, otra que avanza y una condicion que las relaciona) se repite en casi todos los bucles que vas a escribir."
+  },
   pruebas: [
     { entrada: { objetivo: 5 }, salida: 15, oculta: false },
     { entrada: { objetivo: 1 }, salida: 1, oculta: false },

@@ -62,12 +62,27 @@ export const EjemploSchema = z.object({
   comentario: z.string(),
 });
 
+/**
+ * Lo que se explica al superar la mision, nunca antes.
+ *
+ * Pasar la mision y haber aprendido no son lo mismo: con las tres pistas se
+ * llega a la solucion copiandola. Este repaso desmonta la solucion pieza a
+ * pieza para que quede algo cuando se apaga la pantalla.
+ */
+export const RepasoSchema = z.object({
+  resumen: z.string(),
+  piezas: z.array(z.object({ parte: z.string(), hace: z.string() })).min(1),
+  ojo: z.string().optional(),
+});
+
 /** Se resuelve escribiendo Python en el editor. */
 export const MisionCodigoSchema = BaseSchema.extend({
   tipo: z.literal("codigo"),
   plantilla: z.string(),
   // Obligatorio cuando la mision estrena un concepto; el validador lo exige.
   ejemplo: EjemploSchema.optional(),
+  // Se muestra solo al superar. El validador lo exige en toda mision de codigo.
+  repaso: RepasoSchema,
   // Solucion de referencia. El validador la ejecuta contra las pruebas de la
   // propia mision: es lo que permite detectar pruebas contradictorias,
   // restricciones imposibles de cumplir y presupuestos de ops irreales.
@@ -106,6 +121,7 @@ export type Sensor = z.infer<typeof SensorSchema>;
 export type Restricciones = z.infer<typeof RestriccionesSchema>;
 export type FalloPrevisto = z.infer<typeof FalloPrevistoSchema>;
 export type Ejemplo = z.infer<typeof EjemploSchema>;
+export type Repaso = z.infer<typeof RepasoSchema>;
 export type Paso = z.infer<typeof PasoSchema>;
 export type MisionCodigo = z.infer<typeof MisionCodigoSchema>;
 export type MisionEntorno = z.infer<typeof MisionEntornoSchema>;

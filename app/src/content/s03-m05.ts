@@ -20,6 +20,28 @@ export const s03m05: Mision = {
     comentario: "El bucle de fuera te da una fila entera en cada vuelta; el de dentro recorre las casillas de esa fila. El de dentro se ejecuta completo por cada vuelta del de fuera, asi que con 2 filas de 2 casillas se miran 4 casillas en total. Cada nivel anadido lleva cuatro espacios mas de sangria.",
   },
   salida: "obstaculos",
+  repaso: {
+    "resumen": "Acabas de recorrer una estructura de dos niveles: una lista que contiene listas.",
+    "piezas": [
+      {
+        "parte": "for fila in rejilla:",
+        "hace": "El bucle de fuera te da una fila entera en cada vuelta. Una fila es a su vez una lista."
+      },
+      {
+        "parte": "for casilla in fila:",
+        "hace": "El de dentro recorre las casillas de esa fila. Se ejecuta entero por cada vuelta del de fuera."
+      },
+      {
+        "parte": "if casilla == 1:",
+        "hace": "Compara la casilla, no la fila. Comparar la fila con 1 daria un error de tipos."
+      },
+      {
+        "parte": "obstaculos = obstaculos + 1",
+        "hace": "El acumulador de siempre, ahora en el nivel mas interno."
+      }
+    ],
+    "ojo": "Con 3 filas de 3 casillas se miran 9 casillas, no 3. Cada nivel de anidamiento multiplica el trabajo, y por eso el presupuesto de operaciones de esta mision es mayor."
+  },
   pruebas: [
     {
       entrada: { rejilla: [[0, 1, 0], [1, 1, 0], [0, 0, 1]] },
