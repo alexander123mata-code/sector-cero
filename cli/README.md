@@ -7,9 +7,12 @@ no se juega en una pestana: se juega montando tu entorno de verdad. Este
 comando mira que tienes ya listo y te da una ficha para pegar en el juego.
 
 ```bash
-pip install sector-cero
+pip install https://alexander123mata-code.github.io/sector-cero/sector_cero-0.1.0-py3-none-any.whl
 sector verify
 ```
+
+Todavia no esta en PyPI: la rueda se publica con el sitio del juego en cada
+despliegue.
 
 No hace falta que todo pase. La ficha recoge lo que si esta listo, y cada
 mision del Sector 00 pide solo lo suyo.

@@ -98,6 +98,19 @@ jobs:
       - run: npm run build
         working-directory: app
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # El CLI no esta en PyPI, asi que la rueda viaja con el sitio: queda en
+      # https://<pages>/sector_cero-<version>-py3-none-any.whl y pip la
+      # instala desde ahi sin necesitar Git, que en la mision 01 todavia no
+      # existe. instalacion.test.ts vigila que la URL y la version no se
+      # separen.
+      - name: Publicar la rueda del CLI junto al sitio
+        run: pip wheel . --no-deps --wheel-dir ../app/dist
+        working-directory: cli
+
       - uses: actions/configure-pages@v5
 
       - uses: actions/upload-pages-artifact@v3
