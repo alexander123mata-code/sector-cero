@@ -1,4 +1,5 @@
 import type { Mision } from "../types/mission";
+import { ORDEN_INSTALAR_CLI } from "./instalacion";
 
 export const s00m01: Mision = {
   tipo: "entorno",
@@ -30,8 +31,8 @@ export const s00m01: Mision = {
       "orden": "python --version"
     },
     {
-      "texto": "Instala el comprobador de Sector Cero.",
-      "orden": "pip install sector-cero"
+      "texto": "Instala el comprobador de Sector Cero. Es largo: copialo entero de una vez.",
+      orden: ORDEN_INSTALAR_CLI
     },
     {
       "texto": "Ejecutalo y copia la ficha que imprime al final.",

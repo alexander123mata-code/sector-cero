@@ -59,9 +59,14 @@ El Sector 00 son misiones de entorno, y por eso la instalacion deja de ser un
 obstaculo previo al juego para pasar a ser la primera victoria.
 
 ```bash
-pip install sector-cero
+pip install https://alexander123mata-code.github.io/sector-cero/sector_cero-0.1.0-py3-none-any.whl
 sector verify
 ```
+
+El paquete no esta en PyPI todavia. La rueda se publica junto al sitio en cada
+despliegue, asi que se instala desde una URL https y no hace falta Git -- que
+en la mision 01 aun no esta instalado. La version de la URL vive en
+`app/src/content/instalacion.ts` y un test la ata a `cli/pyproject.toml`.
 
 La ficha no es un mecanismo antifraude: el juego no tiene servidor, asi que se
 puede fabricar a mano. La suma de control solo comprueba que el pegado llego
@@ -150,3 +155,7 @@ El CI corre los cuatro comandos en cada push y pull request.
 Se cortan dentro de Python con `sys.settrace` a las 300000 operaciones, de
 forma determinista. Matar el worker desde fuera existe solo como red de
 seguridad, no como mecanismo principal.
+
+## Licencia
+
+MIT. Ver [LICENSE](LICENSE).

@@ -1,4 +1,5 @@
 import type { Mision } from "../types/mission";
+import { ORDEN_INSTALAR_CLI } from "./instalacion";
 
 export const s00m03: Mision = {
   tipo: "entorno",
@@ -34,7 +35,7 @@ export const s00m03: Mision = {
     },
     {
       "texto": "Sabras que funciono porque el nombre del entorno aparece al principio de la linea. Instala el comprobador dentro y ejecutalo.",
-      "orden": "pip install sector-cero\nsector verify"
+      orden: `${ORDEN_INSTALAR_CLI}\nsector verify`
     }
   ],
   pistas: [
