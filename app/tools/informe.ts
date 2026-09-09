@@ -111,6 +111,24 @@ for (const f of filas) {
         f.faltasFrecuentes.map((x) => `${x.falta} (x${x.veces})`).join(", "),
     );
   }
+  // El equivalente de 'SIN MENSAJE' para las misiones de logica: una respuesta
+  // equivocada que se repite no es torpeza del jugador, es un enunciado que
+  // admite otra lectura o un distractor demasiado plausible.
+  const respuestasRepetidas = f.respuestasFallidas.filter((r) => r.veces > 1);
+  if (respuestasRepetidas.length) {
+    notas.push(
+      "respuestas equivocadas que se repiten (revisa el enunciado, las opciones o el porque): " +
+        respuestasRepetidas
+          .map((r) => `ejercicio ${r.ejercicio + 1} -> ${r.dado} (x${r.veces})`)
+          .join(", "),
+    );
+  }
+  const atasco = f.ejerciciosFallados.find((e) => e.veces >= Math.max(2, f.jugadores));
+  if (atasco) {
+    notas.push(
+      `el ejercicio ${atasco.ejercicio + 1} se falla ${atasco.veces} vez(ces): es el cuello de botella de la mision`,
+    );
+  }
   if (!notas.length) continue;
   console.log(`  ${f.mision}`);
   for (const n of notas) console.log(`    - ${n}`);

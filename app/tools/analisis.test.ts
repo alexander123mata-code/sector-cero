@@ -132,3 +132,57 @@ test("cuenta cuantas veces se empieza de nuevo", () => {
   assert.equal(m.reposiciones, 2);
   assert.equal(m.superada, 1);
 });
+
+function responde(mision: string, ejercicio: number, acierta: boolean, dado: string): Suceso {
+  return {
+    tipo: "responde",
+    mision,
+    t: T0 + 60000,
+    ejercicio,
+    forma: "eleccion",
+    intento: acierta ? 1 : 2,
+    acierta,
+    dado,
+  };
+}
+
+/**
+ * Una mision de logica no emite 'envia' ni 'ficha'. Antes se colaba en el
+ * cajon del 'else' final y se contaba como una ficha, asi que el sector
+ * entero salia sin superar y con intentos inventados.
+ */
+test("una mision de logica terminada cuenta como superada", () => {
+  const r = reg("a", [
+    { tipo: "abre", mision: "L1", t: T0 },
+    responde("L1", 0, true, "1"),
+    responde("L1", 1, false, "0"),
+    responde("L1", 1, true, "2"),
+    { tipo: "resuelve", mision: "L1", t: T0 + 300000, estrellas: 2, aLaPrimera: 1, total: 2 },
+  ]);
+  const [m] = analizar([r]);
+  assert.equal(m.superada, 1);
+  assert.equal(m.tasaAcierto, 100);
+  assert.equal(m.abandonos, 0);
+  assert.equal(m.envios, 3);
+  assert.equal(m.fichasIlegibles, 0);
+});
+
+test("una mision de logica abierta y abandonada no cuenta como superada", () => {
+  const r = reg("a", [
+    { tipo: "abre", mision: "L1", t: T0 },
+    responde("L1", 0, false, "3"),
+  ]);
+  const [m] = analizar([r]);
+  assert.equal(m.superada, 0);
+  assert.equal(m.abandonos, 1);
+});
+
+test("senala el ejercicio que se atasca y con que respuesta", () => {
+  const rs = [
+    reg("a", [responde("L1", 2, false, "0"), responde("L1", 2, true, "1")]),
+    reg("b", [responde("L1", 2, false, "0"), responde("L1", 2, true, "1")]),
+  ];
+  const [m] = analizar(rs);
+  assert.deepEqual(m.ejerciciosFallados, [{ ejercicio: 2, veces: 2 }]);
+  assert.deepEqual(m.respuestasFallidas, [{ ejercicio: 2, dado: "0", veces: 2 }]);
+});

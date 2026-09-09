@@ -47,6 +47,17 @@ export type Suceso =
       acierta: boolean;
       dado: string;
     }
+  // Cierre de una mision de logica. Es el equivalente de 'envia' con
+  // superada, o de una 'ficha' correcta: sin el, el informe no puede saber
+  // que una mision de logica se supero, y la contaria como abandonada.
+  | {
+      tipo: "resuelve";
+      mision: string;
+      t: number;
+      estrellas: number;
+      aLaPrimera: number;
+      total: number;
+    }
   | { tipo: "pista"; mision: string; t: number; numero: number }
   | { tipo: "repone"; mision: string; t: number; intento: number }
   | {

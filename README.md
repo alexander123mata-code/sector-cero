@@ -90,6 +90,8 @@ proyecto se muere antes de la trigesima.
 ```bash
 cd app
 npm run mision:nueva -- s03-m06 "Contar hacia atras"
+npm run mision:nueva -- s01-m07 "Trazar a mano" --logica
+npm run mision:nueva -- s00-m07 "Instalar algo" --entorno
 # rellena los TODO del archivo generado
 npm run validar
 npm run dev
@@ -143,6 +145,12 @@ npm test          # reglas del validador
 npm run validar   # ejecuta cada solucion de referencia contra sus pruebas
 npm run build     # tipos y bundle
 ```
+
+`npm run build` comprueba los tipos de `src/` **y de `tools/`**. Las
+herramientas estuvieron un tiempo fuera del compilador y eso dejo pasar un
+error real: al anadir un suceso nuevo al registro, el analisis lo metia en el
+cajon del `else` final y lo contaba como una ficha. El proyecto de tipos
+`tsconfig.tools.json` existe para que eso no vuelva a colarse.
 
 `npm run validar` es la barrera que importa. Cada mision trae una solucion de
 referencia y el validador la ejecuta contra las pruebas de la propia mision,

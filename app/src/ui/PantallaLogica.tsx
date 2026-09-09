@@ -84,8 +84,20 @@ export function PantallaLogica({ mision }: { mision: MisionLogica }) {
     setPaso(siguiente);
     setIntento(1);
     setFase("respondiendo");
-    if (siguiente < total) setRespuesta(respuestaVacia(mision.ejercicios[siguiente]));
-    else anotar(mision.id, estrellasLogica(total, aLaPrimera), true);
+    if (siguiente < total) {
+      setRespuesta(respuestaVacia(mision.ejercicios[siguiente]));
+      return;
+    }
+    const ganadas = estrellasLogica(total, aLaPrimera);
+    anotar(mision.id, ganadas, true);
+    registrar({
+      tipo: "resuelve",
+      mision: mision.id,
+      t: Date.now(),
+      estrellas: ganadas,
+      aLaPrimera,
+      total,
+    });
   };
 
   const estrellas = estrellasLogica(total, aLaPrimera);
