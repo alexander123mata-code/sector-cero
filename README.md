@@ -49,11 +49,19 @@ cli/                   el paquete `sector-cero` que se instala con pip
 diseno/                maquetas .dc.html del lienzo de diseno
 ```
 
-## Los dos tipos de mision
+## Los tres tipos de mision
 
 Una mision de **codigo** se resuelve escribiendo Python en el editor. Una de
 **entorno** se resuelve fuera del navegador: el jugador monta algo en su
-maquina, ejecuta `sector verify` y pega la ficha que imprime.
+maquina, ejecuta `sector verify` y pega la ficha que imprime. Una de **logica**
+se resuelve contestando: elegir entre opciones, ordenar unos pasos o rellenar
+una tabla. Ni editor, ni interprete, ni pruebas.
+
+El Sector 01 son misiones de logica, y va antes de la primera linea de Python a
+proposito. La logica y el idioma en que se escribe son dos cosas distintas, y
+mezclarlas es lo que hace que alguien crea que no sabe programar cuando lo que
+no sabe es la sintaxis. Cada ejercicio se corrige en el sitio y explica el
+porque: las tres estrellas se ganan acertandolos todos a la primera.
 
 El Sector 00 son misiones de entorno, y por eso la instalacion deja de ser un
 obstaculo previo al juego para pasar a ser la primera victoria.
@@ -147,6 +155,8 @@ asi que detecta:
   Nivel 3 no mide nada
 - mensajes de `fallosPrevistos` que se dispararian con una solucion valida
 - prerrequisitos inexistentes o ciclicos
+- en las misiones de logica: tablas que se contestan siempre igual, opciones
+  repetidas, respuestas fuera de las opciones y ejercicios sin explicacion
 
 El CI corre los cuatro comandos en cada push y pull request.
 

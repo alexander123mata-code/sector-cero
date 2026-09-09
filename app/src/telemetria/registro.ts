@@ -37,6 +37,16 @@ export type Suceso =
       nodos: string[];
       fallos: Fallo[];
     }
+  | {
+      tipo: "responde";
+      mision: string;
+      t: number;
+      ejercicio: number;
+      forma: string;
+      intento: number;
+      acierta: boolean;
+      dado: string;
+    }
   | { tipo: "pista"; mision: string; t: number; numero: number }
   | { tipo: "repone"; mision: string; t: number; intento: number }
   | {
