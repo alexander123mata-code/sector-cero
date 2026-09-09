@@ -14,7 +14,7 @@ export const s02m01: Mision = {
   ],
   minutos: 5,
   xp: 60,
-  enunciado: "Una variable es una caja con nombre donde guardas algo. Aqui ya existe una llamada `mensaje`. Copia lo que hay dentro a otra caja llamada `respuesta`.",
+  enunciado: "Lo que en el Sector 01 llamabas una caja con nombre, en Python se llama variable. Aqui ya existe una llamada `mensaje`. Copia lo que hay dentro a otra llamada `respuesta`.",
   plantilla: "# mensaje ya existe: cada prueba le pone su valor. No la declares tu.\n# Deja el resultado en una variable llamada: respuesta\n\n# tu codigo aqui\n",
   solucion: "respuesta = mensaje\n",
   salida: "respuesta",
