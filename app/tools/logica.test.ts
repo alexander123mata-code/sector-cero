@@ -243,3 +243,37 @@ test("las tres estrellas se ganan acertandolo todo a la primera", () => {
   assert.equal(estrellasLogica(4, 0), 1);
   assert.equal(estrellasLogica(0, 0), 0);
 });
+
+/**
+ * El fallo que motivo separar el vocabulario por tipo: el Sector 01 usaba
+ * 'variable' antes que el 02, asi que la mision de codigo que ensena a
+ * escribirla dejaba de necesitar ejemplo. Ver una caja dibujada no ensena a
+ * teclear `respuesta = mensaje`.
+ */
+test("una mision de codigo estrena su concepto aunque una de logica ya lo usara", () => {
+  const conceptoCompartido = ["variable"];
+  const logica = base({ id: "s99-m01-logica", concepto: conceptoCompartido });
+  const codigo = MisionSchema.parse({
+    tipo: "codigo",
+    id: "s99-m02-codigo",
+    sector: 99,
+    titulo: "Prueba",
+    concepto: conceptoCompartido,
+    requiere: [],
+    minutos: 5,
+    xp: 10,
+    enunciado: "Guarda algo en total.",
+    plantilla: "total = 0\n",
+    solucion: "total = 1\n",
+    repaso: { resumen: "Lo hecho.", piezas: [{ parte: "x = 1", hace: "Guarda un uno." }] },
+    salida: "total",
+    pruebas: [
+      { entrada: { a: 1 }, salida: 1, oculta: false },
+      { entrada: { a: 2 }, salida: 2, oculta: true },
+    ],
+    restricciones: { exigeNodo: [], prohibeNodo: [], presupuestoOps: 10 },
+    pistas: ["una pista"],
+    fallosPrevistos: [],
+  });
+  assert.ok(reglas([logica, codigo]).includes("concepto-sin-ejemplo"));
+});
