@@ -111,9 +111,73 @@ export const MisionEntornoSchema = BaseSchema.extend({
   pasos: z.array(PasoSchema).min(1),
 });
 
+/**
+ * Un ejercicio del Sector 01. Todos comparten la pregunta, un bloque opcional
+ * en monoespaciado (pseudocodigo, una lista de pasos, unos datos) y el
+ * `porque`: la explicacion que se muestra al contestar, se acierte o no.
+ *
+ * El `porque` no es un premio por acertar. Es la mision entera: acertar por
+ * intuicion y no saber por que es exactamente lo que este sector viene a
+ * arreglar.
+ */
+const EjercicioBase = z.object({
+  pregunta: z.string(),
+  muestra: z.string().optional(),
+  porque: z.string(),
+});
+
+/** Elegir una respuesta entre varias. */
+export const EjercicioEleccionSchema = EjercicioBase.extend({
+  forma: z.literal("eleccion"),
+  opciones: z.array(z.string()).min(2),
+  correcta: z.number().int().nonnegative(),
+});
+
+/** Poner unos pasos en orden. `piezas` va en el orden correcto; la pantalla las baraja. */
+export const EjercicioOrdenSchema = EjercicioBase.extend({
+  forma: z.literal("orden"),
+  piezas: z.array(z.string()).min(2),
+});
+
+/**
+ * Rellenar la ultima columna de una tabla fila a fila. Sirve para una tabla de
+ * verdad y para seguir el rastro de un valor paso a paso, que son el mismo
+ * ejercicio con otra ropa.
+ */
+export const EjercicioTablaSchema = EjercicioBase.extend({
+  forma: z.literal("tabla"),
+  columnas: z.array(z.string()).min(2),
+  opciones: z.array(z.string()).min(2),
+  filas: z.array(z.object({ celdas: z.array(z.string()).min(1), respuesta: z.string() })).min(1),
+});
+
+export const EjercicioSchema = z.discriminatedUnion("forma", [
+  EjercicioEleccionSchema,
+  EjercicioOrdenSchema,
+  EjercicioTablaSchema,
+]);
+
+/**
+ * Se resuelve pensando, no escribiendo. El Sector 01 va antes de la primera
+ * linea de Python a proposito: la logica y el idioma en que se escribe son dos
+ * cosas distintas, y mezclarlas es lo que hace que alguien crea que no sabe
+ * programar cuando lo que no sabe es la sintaxis.
+ *
+ * Por eso aqui no hay editor, ni interprete, ni pruebas: hay preguntas sobre
+ * mecanismo. Nada de lo que aparece en estos ejercicios esta escrito en
+ * Python.
+ */
+export const MisionLogicaSchema = BaseSchema.extend({
+  tipo: z.literal("logica"),
+  ejemplo: EjemploSchema.optional(),
+  repaso: RepasoSchema,
+  ejercicios: z.array(EjercicioSchema).min(1),
+});
+
 export const MisionSchema = z.discriminatedUnion("tipo", [
   MisionCodigoSchema,
   MisionEntornoSchema,
+  MisionLogicaSchema,
 ]);
 
 export type Prueba = z.infer<typeof PruebaSchema>;
@@ -125,10 +189,16 @@ export type Repaso = z.infer<typeof RepasoSchema>;
 export type Paso = z.infer<typeof PasoSchema>;
 export type MisionCodigo = z.infer<typeof MisionCodigoSchema>;
 export type MisionEntorno = z.infer<typeof MisionEntornoSchema>;
+export type Ejercicio = z.infer<typeof EjercicioSchema>;
+export type EjercicioEleccion = z.infer<typeof EjercicioEleccionSchema>;
+export type EjercicioOrden = z.infer<typeof EjercicioOrdenSchema>;
+export type EjercicioTabla = z.infer<typeof EjercicioTablaSchema>;
+export type MisionLogica = z.infer<typeof MisionLogicaSchema>;
 export type Mision = z.infer<typeof MisionSchema>;
 
 export const esCodigo = (m: Mision): m is MisionCodigo => m.tipo === "codigo";
 export const esEntorno = (m: Mision): m is MisionEntorno => m.tipo === "entorno";
+export const esLogica = (m: Mision): m is MisionLogica => m.tipo === "logica";
 
 /** Resultado de un caso de prueba tras correr el codigo del jugador. */
 export type ResultadoPrueba = {
