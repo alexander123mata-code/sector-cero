@@ -10,7 +10,7 @@ export const s02m01: Mision = {
     "asignacion"
   ],
   requiere: [
-    "s00-m06-commit"
+    "s01-m06-repeticion"
   ],
   minutos: 5,
   xp: 60,

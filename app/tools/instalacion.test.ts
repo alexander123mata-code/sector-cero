@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { misiones } from "../src/content";
-import { esCodigo } from "../src/types/mission";
+import { esEntorno } from "../src/types/mission";
 import { ORDEN_INSTALAR_CLI, RUEDA_CLI, VERSION_CLI } from "../src/content/instalacion";
 
 const PYPROJECT = fileURLToPath(new URL("../../cli/pyproject.toml", import.meta.url));
@@ -35,9 +35,11 @@ test("el nombre de la rueda es el que produce hatchling", () => {
  */
 test("ninguna mision instala el CLI por su cuenta", () => {
   for (const m of misiones) {
-    const textos = esCodigo(m)
-      ? [m.enunciado, ...m.pistas]
-      : [m.enunciado, ...m.pistas, ...m.pasos.flatMap((p) => [p.texto, p.orden ?? ""])];
+    const textos = [
+      m.enunciado,
+      ...m.pistas,
+      ...(esEntorno(m) ? m.pasos.flatMap((p) => [p.texto, p.orden ?? ""]) : []),
+    ];
     for (const t of textos) {
       assert.ok(
         !/pip install sector-cero(?!\S)/.test(t),
@@ -49,7 +51,7 @@ test("ninguna mision instala el CLI por su cuenta", () => {
 
 test("el Sector 00 instala el CLI antes de pedir la ficha", () => {
   const conOrden = misiones.filter(
-    (m) => !esCodigo(m) && m.pasos.some((p) => p.orden?.includes(ORDEN_INSTALAR_CLI)),
+    (m) => esEntorno(m) && m.pasos.some((p) => p.orden?.includes(ORDEN_INSTALAR_CLI)),
   );
   assert.ok(conOrden.length > 0, "ninguna mision instala el comprobador");
 });
